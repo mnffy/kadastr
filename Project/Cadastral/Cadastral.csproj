@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -191,6 +193,60 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataModel\AspNetRole.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AspNetUser.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AspNetUserClaim.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\AspNetUserLogin.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Cadastr.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CadastralDBEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CadastralDBEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CadastralDBEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\CadastralDBEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CadastralDBEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\C__MigrationHistory.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Immovable.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\ImmovableType.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Land.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LandType.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\LicenseRequest.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\Owner.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataModel\sysdiagram.cs">
+      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,6 +259,16 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DataModel\CadastralDBEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CadastralDBEntities.edmx</DependentUpon>
+      <LastGenOutput>CadastralDBEntities.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataModel\CadastralDBEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CadastralDBEntities.edmx</DependentUpon>
+      <LastGenOutput>CadastralDBEntities.cs</LastGenOutput>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -211,6 +277,13 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="DataModel\CadastralDBEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CadastralDBEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DataModel\CadastralDBEntities.edmx.diagram">
+      <DependentUpon>CadastralDBEntities.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -275,6 +348,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

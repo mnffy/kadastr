@@ -169,3 +169,11 @@ Project/Cadastral/bin/Microsoft.Owin.Security.Facebook.dll
 Project/Cadastral/bin/Microsoft.Owin.Security.Cookies.xml
 Project/Cadastral/bin/Microsoft.Owin.Security.Cookies.dll
 Project/Cadastral/bin/Microsoft.Owin.Host.SystemWeb.xml
+Project/Cadastral/obj/Debug/edmxResourcesToEmbed/DataModel/CadastralDBEntities.ssdl
+Project/Cadastral/obj/Debug/edmxResourcesToEmbed/DataModel/CadastralDBEntities.msl
+Project/Cadastral/obj/Debug/edmxResourcesToEmbed/DataModel/CadastralDBEntities.csdl
+Project/Cadastral/obj/Debug/TempPE/DataModel.CadastralDBEntities.cs.dll
+Project/Cadastral/obj/Debug/TempPE/DataModel.CadastralDBEntities.Designer.cs.dll
+Project/Cadastral/obj/Debug/TempPE/DataModel.CadastralDBEntities.Context.cs.dll
+Project/Cadastral/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+Project/Cadastral/obj/Debug/CoreCompileInputs.cache
