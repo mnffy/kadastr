@@ -8,7 +8,7 @@ namespace Cadastral
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuthFail(app);
+            ConfigureAuth(app);
         }
     }
 }
