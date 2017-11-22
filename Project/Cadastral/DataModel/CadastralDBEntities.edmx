@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CadastraDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CadastraDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -121,6 +121,8 @@
           </Key>
           <Property Name="OwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateBirth" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -188,6 +190,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Immovable_ImmovableTypeId">
+          <End Role="ImmovableType" Type="Self.ImmovableType" Multiplicity="1" />
+          <End Role="Immovable" Type="Self.Immovable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImmovableType">
+              <PropertyRef Name="ImmovableTypeId" />
+            </Principal>
+            <Dependent Role="Immovable">
+              <PropertyRef Name="ImmovableTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Immovable_OwnerId">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="1" />
+          <End Role="Immovable" Type="Self.Immovable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="OwnerId" />
+            </Principal>
+            <Dependent Role="Immovable">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Land_LandTypeId">
+          <End Role="LandType" Type="Self.LandType" Multiplicity="1" />
+          <End Role="Land" Type="Self.Land" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandType">
+              <PropertyRef Name="LandTypeId" />
+            </Principal>
+            <Dependent Role="Land">
+              <PropertyRef Name="LandTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Land_OwnerId">
+          <End Role="Owner" Type="Self.Owner" Multiplicity="1" />
+          <End Role="Land" Type="Self.Land" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="OwnerId" />
+            </Principal>
+            <Dependent Role="Land">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LicenseRequest_ImmovableId">
+          <End Role="Cadastr" Type="Self.Cadastr" Multiplicity="1" />
+          <End Role="LicenseRequest" Type="Self.LicenseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cadastr">
+              <PropertyRef Name="CadastrId" />
+            </Principal>
+            <Dependent Role="LicenseRequest">
+              <PropertyRef Name="CadastrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CadastraDBModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -219,9 +281,28 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Immovable_ImmovableTypeId" Association="Self.FK_Immovable_ImmovableTypeId">
+            <End Role="ImmovableType" EntitySet="ImmovableType" />
+            <End Role="Immovable" EntitySet="Immovable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Immovable_OwnerId" Association="Self.FK_Immovable_OwnerId">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Immovable" EntitySet="Immovable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Land_LandTypeId" Association="Self.FK_Land_LandTypeId">
+            <End Role="LandType" EntitySet="LandType" />
+            <End Role="Land" EntitySet="Land" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Land_OwnerId" Association="Self.FK_Land_OwnerId">
+            <End Role="Owner" EntitySet="Owner" />
+            <End Role="Land" EntitySet="Land" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LicenseRequest_ImmovableId" Association="Self.FK_LicenseRequest_ImmovableId">
+            <End Role="Cadastr" EntitySet="Cadastr" />
+            <End Role="LicenseRequest" EntitySet="LicenseRequest" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CadastraDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -290,6 +371,7 @@
           </Key>
           <Property Name="CadastrId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CadastrTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LicenseRequests" Relationship="CadastraDBModel.FK_LicenseRequest_ImmovableId" FromRole="Cadastr" ToRole="LicenseRequest" />
         </EntityType>
         <EntityType Name="Immovable">
           <Key>
@@ -300,6 +382,8 @@
           <Property Name="Address" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OwnerId" Type="Int32" Nullable="false" />
           <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="ImmovableType" Relationship="CadastraDBModel.FK_Immovable_ImmovableTypeId" FromRole="Immovable" ToRole="ImmovableType" />
+          <NavigationProperty Name="Owner" Relationship="CadastraDBModel.FK_Immovable_OwnerId" FromRole="Immovable" ToRole="Owner" />
         </EntityType>
         <EntityType Name="ImmovableType">
           <Key>
@@ -307,6 +391,7 @@
           </Key>
           <Property Name="ImmovableTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ImmovableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Immovables" Relationship="CadastraDBModel.FK_Immovable_ImmovableTypeId" FromRole="ImmovableType" ToRole="Immovable" />
         </EntityType>
         <EntityType Name="Land">
           <Key>
@@ -318,6 +403,8 @@
           <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Area" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LandType" Relationship="CadastraDBModel.FK_Land_LandTypeId" FromRole="Land" ToRole="LandType" />
+          <NavigationProperty Name="Owner" Relationship="CadastraDBModel.FK_Land_OwnerId" FromRole="Land" ToRole="Owner" />
         </EntityType>
         <EntityType Name="LandType">
           <Key>
@@ -325,6 +412,7 @@
           </Key>
           <Property Name="LandTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Lands" Relationship="CadastraDBModel.FK_Land_LandTypeId" FromRole="LandType" ToRole="Land" />
         </EntityType>
         <EntityType Name="LicenseRequest">
           <Key>
@@ -332,6 +420,7 @@
           </Key>
           <Property Name="LicenseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CadastrId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cadastr" Relationship="CadastraDBModel.FK_LicenseRequest_ImmovableId" FromRole="LicenseRequest" ToRole="Cadastr" />
         </EntityType>
         <EntityType Name="Owner">
           <Key>
@@ -339,6 +428,10 @@
           </Key>
           <Property Name="OwnerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Immovables" Relationship="CadastraDBModel.FK_Immovable_OwnerId" FromRole="Owner" ToRole="Immovable" />
+          <NavigationProperty Name="Lands" Relationship="CadastraDBModel.FK_Land_OwnerId" FromRole="Owner" ToRole="Land" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateBirth" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -408,7 +501,87 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Immovable_ImmovableTypeId" Association="CadastraDBModel.FK_Immovable_ImmovableTypeId">
+            <End Role="ImmovableType" EntitySet="ImmovableTypes" />
+            <End Role="Immovable" EntitySet="Immovables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Immovable_OwnerId" Association="CadastraDBModel.FK_Immovable_OwnerId">
+            <End Role="Owner" EntitySet="Owners" />
+            <End Role="Immovable" EntitySet="Immovables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Land_LandTypeId" Association="CadastraDBModel.FK_Land_LandTypeId">
+            <End Role="LandType" EntitySet="LandTypes" />
+            <End Role="Land" EntitySet="Lands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Land_OwnerId" Association="CadastraDBModel.FK_Land_OwnerId">
+            <End Role="Owner" EntitySet="Owners" />
+            <End Role="Land" EntitySet="Lands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LicenseRequest_ImmovableId" Association="CadastraDBModel.FK_LicenseRequest_ImmovableId">
+            <End Role="Cadastr" EntitySet="Cadastrs" />
+            <End Role="LicenseRequest" EntitySet="LicenseRequests" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Immovable_ImmovableTypeId">
+          <End Type="CadastraDBModel.ImmovableType" Role="ImmovableType" Multiplicity="1" />
+          <End Type="CadastraDBModel.Immovable" Role="Immovable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImmovableType">
+              <PropertyRef Name="ImmovableTypeId" />
+            </Principal>
+            <Dependent Role="Immovable">
+              <PropertyRef Name="ImmovableTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Immovable_OwnerId">
+          <End Type="CadastraDBModel.Owner" Role="Owner" Multiplicity="1" />
+          <End Type="CadastraDBModel.Immovable" Role="Immovable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="OwnerId" />
+            </Principal>
+            <Dependent Role="Immovable">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Land_LandTypeId">
+          <End Type="CadastraDBModel.LandType" Role="LandType" Multiplicity="1" />
+          <End Type="CadastraDBModel.Land" Role="Land" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandType">
+              <PropertyRef Name="LandTypeId" />
+            </Principal>
+            <Dependent Role="Land">
+              <PropertyRef Name="LandTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Land_OwnerId">
+          <End Type="CadastraDBModel.Owner" Role="Owner" Multiplicity="1" />
+          <End Type="CadastraDBModel.Land" Role="Land" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owner">
+              <PropertyRef Name="OwnerId" />
+            </Principal>
+            <Dependent Role="Land">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LicenseRequest_ImmovableId">
+          <End Type="CadastraDBModel.Cadastr" Role="Cadastr" Multiplicity="1" />
+          <End Type="CadastraDBModel.LicenseRequest" Role="LicenseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cadastr">
+              <PropertyRef Name="CadastrId" />
+            </Principal>
+            <Dependent Role="LicenseRequest">
+              <PropertyRef Name="CadastrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -528,6 +701,8 @@
           <EntitySetMapping Name="Owners">
             <EntityTypeMapping TypeName="CadastraDBModel.Owner">
               <MappingFragment StoreEntitySet="Owner">
+                <ScalarProperty Name="DateBirth" ColumnName="DateBirth" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>

@@ -14,7 +14,21 @@ namespace Cadastral.DataModel
     
     public partial class Owner
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Owner()
+        {
+            this.Immovables = new HashSet<Immovable>();
+            this.Lands = new HashSet<Land>();
+        }
+    
         public int OwnerId { get; set; }
         public string Name { get; set; }
+        public string Surname { get; set; }
+        public System.DateTime DateBirth { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Immovable> Immovables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Land> Lands { get; set; }
     }
 }

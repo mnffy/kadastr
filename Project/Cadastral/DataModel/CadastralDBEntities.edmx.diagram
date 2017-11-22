@@ -21,6 +21,11 @@
         <AssociationConnector Association="CadastraDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="CadastraDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="CadastraDBModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="CadastraDBModel.FK_Immovable_ImmovableTypeId" />
+        <AssociationConnector Association="CadastraDBModel.FK_Immovable_OwnerId" />
+        <AssociationConnector Association="CadastraDBModel.FK_Land_LandTypeId" />
+        <AssociationConnector Association="CadastraDBModel.FK_Land_OwnerId" />
+        <AssociationConnector Association="CadastraDBModel.FK_LicenseRequest_ImmovableId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

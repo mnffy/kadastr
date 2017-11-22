@@ -14,7 +14,16 @@ namespace Cadastral.DataModel
     
     public partial class Cadastr
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cadastr()
+        {
+            this.LicenseRequests = new HashSet<LicenseRequest>();
+        }
+    
         public int CadastrId { get; set; }
         public int CadastrTypeId { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LicenseRequest> LicenseRequests { get; set; }
     }
 }

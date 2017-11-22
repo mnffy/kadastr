@@ -20,5 +20,8 @@ namespace Cadastral.DataModel
         public decimal Cost { get; set; }
         public decimal Area { get; set; }
         public string Address { get; set; }
+    
+        public virtual LandType LandType { get; set; }
+        public virtual Owner Owner { get; set; }
     }
 }

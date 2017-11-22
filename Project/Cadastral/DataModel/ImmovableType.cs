@@ -14,7 +14,16 @@ namespace Cadastral.DataModel
     
     public partial class ImmovableType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ImmovableType()
+        {
+            this.Immovables = new HashSet<Immovable>();
+        }
+    
         public int ImmovableTypeId { get; set; }
         public string ImmovableName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Immovable> Immovables { get; set; }
     }
 }

@@ -16,5 +16,7 @@ namespace Cadastral.DataModel
     {
         public int LicenseId { get; set; }
         public int CadastrId { get; set; }
+    
+        public virtual Cadastr Cadastr { get; set; }
     }
 }
