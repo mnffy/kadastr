@@ -191,8 +191,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CadastrController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LandController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OwnerController.cs" />
+    <Compile Include="DAO\CadastrDAO.cs" />
+    <Compile Include="DAO\LandDAO.cs" />
+    <Compile Include="DAO\OwnerDAO.cs" />
     <Compile Include="DataModel\AspNetRole.cs">
       <DependentUpon>CadastralDBEntities.tt</DependentUpon>
     </Compile>
@@ -251,8 +257,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CadastrViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImmovableTypeViewModel.cs" />
+    <Compile Include="Models\ImmovableViewModel.cs" />
+    <Compile Include="Models\LandTypeViewModel.cs" />
+    <Compile Include="Models\LandViewModel.cs" />
+    <Compile Include="Models\LicenseRequestModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OwnerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -333,6 +346,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Cadastr\" />
+    <Folder Include="Views\Land\" />
+    <Folder Include="Views\Owner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

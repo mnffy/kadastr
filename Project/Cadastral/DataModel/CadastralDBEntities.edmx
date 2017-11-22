@@ -114,6 +114,7 @@
           </Key>
           <Property Name="LicenseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CadastrId" Type="int" Nullable="false" />
+          <Property Name="LicenseReqState" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Owner">
           <Key>
@@ -421,6 +422,7 @@
           <Property Name="LicenseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CadastrId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Cadastr" Relationship="CadastraDBModel.FK_LicenseRequest_ImmovableId" FromRole="LicenseRequest" ToRole="Cadastr" />
+          <Property Name="LicenseReqState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Owner">
           <Key>
@@ -693,6 +695,7 @@
           <EntitySetMapping Name="LicenseRequests">
             <EntityTypeMapping TypeName="CadastraDBModel.LicenseRequest">
               <MappingFragment StoreEntitySet="LicenseRequest">
+                <ScalarProperty Name="LicenseReqState" ColumnName="LicenseReqState" />
                 <ScalarProperty Name="LicenseId" ColumnName="LicenseId" />
                 <ScalarProperty Name="CadastrId" ColumnName="CadastrId" />
               </MappingFragment>
