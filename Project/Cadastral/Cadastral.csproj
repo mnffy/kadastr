@@ -193,10 +193,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CadastrController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImmovableController.cs" />
     <Compile Include="Controllers\LandController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="DAO\CadastrDAO.cs" />
+    <Compile Include="DAO\ImmovableDAO.cs" />
     <Compile Include="DAO\LandDAO.cs" />
     <Compile Include="DAO\OwnerDAO.cs" />
     <Compile Include="DataModel\AspNetRole.cs">
@@ -347,6 +349,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Cadastr\" />
+    <Folder Include="Views\Immovable\" />
     <Folder Include="Views\Land\" />
     <Folder Include="Views\Owner\" />
   </ItemGroup>

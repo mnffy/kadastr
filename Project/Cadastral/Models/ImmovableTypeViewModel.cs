@@ -8,6 +8,6 @@ namespace Cadastral.Models
     public class ImmovableTypeViewModel
     {
         public int ImmovableTypeId { get; set; }
-        public int ImmovableTypeName { get; set; }
+        public string ImmovableTypeName { get; set; }
     }
 }
