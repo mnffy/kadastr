@@ -42,7 +42,7 @@ namespace Cadastral.DAO
                    })
             .ToListAsync();
 
-        public async Task<List<LandViewModel>> GetLandById(int landId) =>
+        public async Task<LandViewModel> GetLandById(int landId) =>
             await (from land in _edmx.Lands
                    where land.LandId == landId
                    select new LandViewModel
@@ -64,7 +64,7 @@ namespace Cadastral.DAO
                            BirthDate = land.Owner.DateBirth
                        }
                    })
-            .ToListAsync();
+            .FirstOrDefaultAsync();
 
         public async Task EditLand(LandViewModel model)
         {
