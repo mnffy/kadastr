@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Cadastral.DAO;
+using Cadastral.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -71,6 +74,7 @@ namespace Cadastral.Controllers
             }
             return RedirectToAction("Index");
         }
+              
 
         public async Task<ActionResult> Delete(LandViewModel model)
         {
