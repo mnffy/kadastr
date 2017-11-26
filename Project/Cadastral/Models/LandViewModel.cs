@@ -13,5 +13,6 @@ namespace Cadastral.Models
         public decimal Cost { get; set; }
         public decimal Area { get; set; }
         public string Address { get; set; }
+        public CadastrViewModel Cadastr { get; set; }
     }
 }

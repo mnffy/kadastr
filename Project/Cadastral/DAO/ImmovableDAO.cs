@@ -31,6 +31,11 @@ namespace Cadastral.DAO
                            OwnerId = im.OwnerId,
                            Name = _edm.Owners.FirstOrDefault(x => x.OwnerId == im.OwnerId).Name,
                            Surname = _edm.Owners.FirstOrDefault(x => x.OwnerId == im.OwnerId).Surname
+                       },
+                       Cadastr = new CadastrViewModel
+                       {
+                           CadastrId = im.CadastrId,
+                           CadastrName = im.Cadastr.Name
                        }
                    })
             .ToListAsync();
@@ -53,6 +58,11 @@ namespace Cadastral.DAO
                           OwnerId = im.OwnerId,
                           Name = _edm.Owners.FirstOrDefault(x => x.OwnerId == im.OwnerId).Name,
                           Surname = _edm.Owners.FirstOrDefault(x => x.OwnerId == im.OwnerId).Surname
+                      },
+                      Cadastr = new CadastrViewModel
+                      {
+                          CadastrId = im.CadastrId,
+                          CadastrName = im.Cadastr.Name
                       }
                   })
            .FirstOrDefaultAsync();
@@ -66,6 +76,7 @@ namespace Cadastral.DAO
             entity.Cost = model.Cost;
             entity.ImmovableTypeId = model.ImmovableType.ImmovableTypeId;
             entity.OwnerId = model.Onwer.OwnerId;
+            entity.CadastrId = model.Cadastr.CadastrId;
             await _edm.SaveChangesAsync();
         }
         public async Task RemoveImmovable(int id)
@@ -86,7 +97,8 @@ namespace Cadastral.DAO
                 Address = model.Address,
                 Cost = model.Cost,
                 ImmovableTypeId = model.ImmovableType.ImmovableTypeId,
-                OwnerId = model.Onwer.OwnerId
+                OwnerId = model.Onwer.OwnerId,
+                CadastrId = model.Cadastr.CadastrId
             };
             _edm.Immovables.Add(immovable);
             await _edm.SaveChangesAsync();

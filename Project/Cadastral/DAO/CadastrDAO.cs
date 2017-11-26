@@ -24,7 +24,7 @@ namespace Cadastral.DAO
                    select new CadastrViewModel
                    {
                        CadastrId = cad.CadastrId,
-                       CadastrName = cad.CadastrTypeId.ToString()
+                       CadastrName = cad.Name
                    })
             .ToListAsync();
 
@@ -34,7 +34,7 @@ namespace Cadastral.DAO
                select new CadastrViewModel
                {
                    CadastrId = cad.CadastrId,
-                   CadastrName = cad.CadastrTypeId.ToString()
+                   CadastrName = cad.Name
                })
             .FirstOrDefaultAsync();
 
@@ -44,7 +44,7 @@ namespace Cadastral.DAO
             var entity = await _edmx.Cadastrs.FirstOrDefaultAsync(x => x.CadastrId == model.CadastrId);
             if (entity == null)
                 throw new Exception("Не найдена модель для редактирования");
-            entity.CadastrTypeId = 1;
+            entity.Name = model.CadastrName;
             await _edmx.SaveChangesAsync();
         }
 
@@ -61,7 +61,7 @@ namespace Cadastral.DAO
         {
             Cadastr entity = new Cadastr
             {
-                CadastrTypeId = 1
+                Name = model.CadastrName
             };
             _edmx.Cadastrs.Add(entity);
             await _edmx.SaveChangesAsync();

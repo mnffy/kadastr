@@ -350,11 +350,15 @@
     <Content Include="Views\Land\CreateLand.cshtml" />
     <Content Include="Views\Land\EditLand.cshtml" />
     <Content Include="Views\Land\Delete.cshtml" />
+    <Content Include="Views\Cadastr\Index.cshtml" />
+    <Content Include="Views\Cadastr\Edit.cshtml" />
+    <Content Include="Views\Immovable\Index.cshtml" />
+    <Content Include="Views\Immovable\Create.cshtml" />
+    <Content Include="Views\Immovable\Edit.cshtml" />
+    <Content Include="Views\Immovable\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Cadastr\" />
-    <Folder Include="Views\Immovable\" />
     <Folder Include="Views\Owner\" />
   </ItemGroup>
   <ItemGroup>

@@ -10,12 +10,9 @@
         <EntityTypeShape EntityType="CadastraDBModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.Cadastr" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.Immovable" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.ImmovableType" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.Land" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.LandType" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.LicenseRequest" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.Owner" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
         <AssociationConnector Association="CadastraDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
@@ -23,10 +20,15 @@
         <AssociationConnector Association="CadastraDBModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="CadastraDBModel.FK_Immovable_ImmovableTypeId" />
         <AssociationConnector Association="CadastraDBModel.FK_Immovable_OwnerId" />
-        <AssociationConnector Association="CadastraDBModel.FK_Land_LandTypeId" />
         <AssociationConnector Association="CadastraDBModel.FK_Land_OwnerId" />
-        <AssociationConnector Association="CadastraDBModel.FK_LicenseRequest_ImmovableId" />
-      </Diagram>
+        <EntityTypeShape EntityType="CadastraDBModel.Cadastr" Width="1.5" PointX="9.125" PointY="4" />
+        <AssociationConnector Association="CadastraDBModel.FK_Land_CadastrId" />
+        <EntityTypeShape EntityType="CadastraDBModel.LandType" Width="1.5" PointX="7.375" PointY="9.875" />
+        <AssociationConnector Association="CadastraDBModel.FK_Land_LandTypeId" />
+        <AssociationConnector Association="CadastraDBModel.FK_Immovable_CadastrId" />
+        <EntityTypeShape EntityType="CadastraDBModel.LicenseRequest" Width="1.5" PointX="10" PointY="7.375" />
+        <AssociationConnector Association="CadastraDBModel.FK_LicenseRequest_LandId" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

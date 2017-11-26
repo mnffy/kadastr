@@ -15,9 +15,9 @@ namespace Cadastral.DataModel
     public partial class LicenseRequest
     {
         public int LicenseId { get; set; }
-        public int CadastrId { get; set; }
         public string LicenseReqState { get; set; }
+        public int LandId { get; set; }
     
-        public virtual Cadastr Cadastr { get; set; }
+        public virtual Land Land { get; set; }
     }
 }

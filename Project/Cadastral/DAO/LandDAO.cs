@@ -23,6 +23,11 @@ namespace Cadastral.DAO
                    where land.LandId > 0
                    select new LandViewModel
                    {
+                       Cadastr = new CadastrViewModel
+                       {
+                           CadastrId = land.CadastrId,
+                           CadastrName = land.Cadastr.Name
+                       },
                        LandId = land.LandId,
                        Address = land.Address,
                        Area = land.Area,
@@ -47,6 +52,11 @@ namespace Cadastral.DAO
                    where land.LandId == landId
                    select new LandViewModel
                    {
+                       Cadastr = new CadastrViewModel
+                       {
+                           CadastrId = land.CadastrId,
+                           CadastrName = land.Cadastr.Name
+                       },
                        LandId = land.LandId,
                        Address = land.Address,
                        Area = land.Area,
@@ -74,11 +84,12 @@ namespace Cadastral.DAO
             if (entity == null)
                 throw new Exception("Модель для редактирования пустая");
 
-            entity.LandTypeId = model.LandType.LandTypeId;
-            entity.OwnerId = model.Owner.OwnerId;
+            entity.LandTypeId = model.LandType.LandTypeId > 0 ? model.LandType.LandTypeId : entity.LandTypeId;
+            entity.OwnerId = model.Owner.OwnerId > 0 ? model.Owner.OwnerId : entity.OwnerId;
             entity.Address = model.Address;
             entity.Area = model.Area;
             entity.Cost = model.Cost;
+            entity.CadastrId = model.Cadastr.CadastrId > 0 ? model.Cadastr.CadastrId : entity.CadastrId;
             await _edmx.SaveChangesAsync();
         }
 
@@ -90,7 +101,8 @@ namespace Cadastral.DAO
                 Area = model.Area,
                 Cost = model.Cost,
                 LandTypeId = model.LandType.LandTypeId,
-                OwnerId = model.Owner.OwnerId
+                OwnerId = model.Owner.OwnerId,
+                CadastrId = model.Cadastr.CadastrId
             };
             _edmx.Lands.Add(land);
             await _edmx.SaveChangesAsync();

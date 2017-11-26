@@ -19,8 +19,10 @@ namespace Cadastral.DataModel
         public string Address { get; set; }
         public int OwnerId { get; set; }
         public decimal Cost { get; set; }
+        public int CadastrId { get; set; }
     
         public virtual ImmovableType ImmovableType { get; set; }
         public virtual Owner Owner { get; set; }
+        public virtual Cadastr Cadastr { get; set; }
     }
 }

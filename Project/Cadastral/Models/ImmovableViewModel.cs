@@ -11,6 +11,7 @@ namespace Cadastral.Models
         public string Address { get; set; }
         public ImmovableTypeViewModel ImmovableType { get; set; }
         public OwnerViewModel Onwer { get; set; }
+        public CadastrViewModel Cadastr { get; set; }
         public decimal Cost { get; set; }
     }
 }

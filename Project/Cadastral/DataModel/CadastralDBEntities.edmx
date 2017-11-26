@@ -71,7 +71,7 @@
             <PropertyRef Name="CadastrId" />
           </Key>
           <Property Name="CadastrId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CadastrTypeId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Immovable">
           <Key>
@@ -79,9 +79,10 @@
           </Key>
           <Property Name="ImmovableId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ImmovableTypeId" Type="int" Nullable="false" />
-          <Property Name="Address" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="OwnerId" Type="int" Nullable="false" />
           <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="CadastrId" Type="int" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="ImmovableType">
           <Key>
@@ -100,21 +101,25 @@
           <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Area" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Address" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CadastrId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="LandType">
           <Key>
             <PropertyRef Name="LandTypeId" />
           </Key>
           <Property Name="LandTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CadastraDB.dbo.LicenseRequest' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="LicenseRequest">
           <Key>
             <PropertyRef Name="LicenseId" />
+            <PropertyRef Name="LandId" />
           </Key>
           <Property Name="LicenseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CadastrId" Type="int" Nullable="false" />
           <Property Name="LicenseReqState" Type="varchar" MaxLength="20" />
+          <Property Name="LandId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Owner">
           <Key>
@@ -191,6 +196,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Immovable_CadastrId">
+          <End Role="Cadastr" Type="Self.Cadastr" Multiplicity="1" />
+          <End Role="Immovable" Type="Self.Immovable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cadastr">
+              <PropertyRef Name="CadastrId" />
+            </Principal>
+            <Dependent Role="Immovable">
+              <PropertyRef Name="CadastrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Immovable_ImmovableTypeId">
           <End Role="ImmovableType" Type="Self.ImmovableType" Multiplicity="1" />
           <End Role="Immovable" Type="Self.Immovable" Multiplicity="*" />
@@ -212,6 +229,18 @@
             </Principal>
             <Dependent Role="Immovable">
               <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Land_CadastrId">
+          <End Role="Cadastr" Type="Self.Cadastr" Multiplicity="1" />
+          <End Role="Land" Type="Self.Land" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cadastr">
+              <PropertyRef Name="CadastrId" />
+            </Principal>
+            <Dependent Role="Land">
+              <PropertyRef Name="CadastrId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -239,15 +268,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LicenseRequest_ImmovableId">
-          <End Role="Cadastr" Type="Self.Cadastr" Multiplicity="1" />
+        <Association Name="FK_LicenseRequest_LandId">
+          <End Role="Land" Type="Self.Land" Multiplicity="1" />
           <End Role="LicenseRequest" Type="Self.LicenseRequest" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cadastr">
-              <PropertyRef Name="CadastrId" />
+            <Principal Role="Land">
+              <PropertyRef Name="LandId" />
             </Principal>
             <Dependent Role="LicenseRequest">
-              <PropertyRef Name="CadastrId" />
+              <PropertyRef Name="LandId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -263,9 +292,15 @@
           <EntitySet Name="ImmovableType" EntityType="Self.ImmovableType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Land" EntityType="Self.Land" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LandType" EntityType="Self.LandType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LicenseRequest" EntityType="Self.LicenseRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Owner" EntityType="Self.Owner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LicenseRequest" EntityType="Self.LicenseRequest" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LicenseRequest].[LicenseId] AS [LicenseId], 
+    [LicenseRequest].[LicenseReqState] AS [LicenseReqState], 
+    [LicenseRequest].[LandId] AS [LandId]
+    FROM [dbo].[LicenseRequest] AS [LicenseRequest]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -282,6 +317,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Immovable_CadastrId" Association="Self.FK_Immovable_CadastrId">
+            <End Role="Cadastr" EntitySet="Cadastr" />
+            <End Role="Immovable" EntitySet="Immovable" />
+          </AssociationSet>
           <AssociationSet Name="FK_Immovable_ImmovableTypeId" Association="Self.FK_Immovable_ImmovableTypeId">
             <End Role="ImmovableType" EntitySet="ImmovableType" />
             <End Role="Immovable" EntitySet="Immovable" />
@@ -289,6 +328,10 @@
           <AssociationSet Name="FK_Immovable_OwnerId" Association="Self.FK_Immovable_OwnerId">
             <End Role="Owner" EntitySet="Owner" />
             <End Role="Immovable" EntitySet="Immovable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Land_CadastrId" Association="Self.FK_Land_CadastrId">
+            <End Role="Cadastr" EntitySet="Cadastr" />
+            <End Role="Land" EntitySet="Land" />
           </AssociationSet>
           <AssociationSet Name="FK_Land_LandTypeId" Association="Self.FK_Land_LandTypeId">
             <End Role="LandType" EntitySet="LandType" />
@@ -298,8 +341,8 @@
             <End Role="Owner" EntitySet="Owner" />
             <End Role="Land" EntitySet="Land" />
           </AssociationSet>
-          <AssociationSet Name="FK_LicenseRequest_ImmovableId" Association="Self.FK_LicenseRequest_ImmovableId">
-            <End Role="Cadastr" EntitySet="Cadastr" />
+          <AssociationSet Name="FK_LicenseRequest_LandId" Association="Self.FK_LicenseRequest_LandId">
+            <End Role="Land" EntitySet="Land" />
             <End Role="LicenseRequest" EntitySet="LicenseRequest" />
           </AssociationSet>
         </EntityContainer>
@@ -366,25 +409,19 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
-        <EntityType Name="Cadastr">
-          <Key>
-            <PropertyRef Name="CadastrId" />
-          </Key>
-          <Property Name="CadastrId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CadastrTypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="LicenseRequests" Relationship="CadastraDBModel.FK_LicenseRequest_ImmovableId" FromRole="Cadastr" ToRole="LicenseRequest" />
-        </EntityType>
         <EntityType Name="Immovable">
           <Key>
             <PropertyRef Name="ImmovableId" />
           </Key>
           <Property Name="ImmovableId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ImmovableTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OwnerId" Type="Int32" Nullable="false" />
           <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <NavigationProperty Name="ImmovableType" Relationship="CadastraDBModel.FK_Immovable_ImmovableTypeId" FromRole="Immovable" ToRole="ImmovableType" />
           <NavigationProperty Name="Owner" Relationship="CadastraDBModel.FK_Immovable_OwnerId" FromRole="Immovable" ToRole="Owner" />
+          <Property Name="CadastrId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cadastr" Relationship="CadastraDBModel.FK_Immovable_CadastrId" FromRole="Immovable" ToRole="Cadastr" />
         </EntityType>
         <EntityType Name="ImmovableType">
           <Key>
@@ -404,25 +441,11 @@
           <Property Name="Cost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Area" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="LandType" Relationship="CadastraDBModel.FK_Land_LandTypeId" FromRole="Land" ToRole="LandType" />
           <NavigationProperty Name="Owner" Relationship="CadastraDBModel.FK_Land_OwnerId" FromRole="Land" ToRole="Owner" />
-        </EntityType>
-        <EntityType Name="LandType">
-          <Key>
-            <PropertyRef Name="LandTypeId" />
-          </Key>
-          <Property Name="LandTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Lands" Relationship="CadastraDBModel.FK_Land_LandTypeId" FromRole="LandType" ToRole="Land" />
-        </EntityType>
-        <EntityType Name="LicenseRequest">
-          <Key>
-            <PropertyRef Name="LicenseId" />
-          </Key>
-          <Property Name="LicenseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CadastrId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cadastr" Relationship="CadastraDBModel.FK_LicenseRequest_ImmovableId" FromRole="LicenseRequest" ToRole="Cadastr" />
-          <Property Name="LicenseReqState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cadastr" Relationship="CadastraDBModel.FK_Land_CadastrId" FromRole="Land" ToRole="Cadastr" />
+          <NavigationProperty Name="LandType" Relationship="CadastraDBModel.FK_Land_LandTypeId" FromRole="Land" ToRole="LandType" />
+          <NavigationProperty Name="LicenseRequests" Relationship="CadastraDBModel.FK_LicenseRequest_LandId" FromRole="Land" ToRole="LicenseRequest" />
         </EntityType>
         <EntityType Name="Owner">
           <Key>
@@ -483,12 +506,9 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Cadastrs" EntityType="Self.Cadastr" />
           <EntitySet Name="Immovables" EntityType="Self.Immovable" />
           <EntitySet Name="ImmovableTypes" EntityType="Self.ImmovableType" />
           <EntitySet Name="Lands" EntityType="Self.Land" />
-          <EntitySet Name="LandTypes" EntityType="Self.LandType" />
-          <EntitySet Name="LicenseRequests" EntityType="Self.LicenseRequest" />
           <EntitySet Name="Owners" EntityType="Self.Owner" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -511,19 +531,30 @@
             <End Role="Owner" EntitySet="Owners" />
             <End Role="Immovable" EntitySet="Immovables" />
           </AssociationSet>
-          <AssociationSet Name="FK_Land_LandTypeId" Association="CadastraDBModel.FK_Land_LandTypeId">
-            <End Role="LandType" EntitySet="LandTypes" />
-            <End Role="Land" EntitySet="Lands" />
-          </AssociationSet>
           <AssociationSet Name="FK_Land_OwnerId" Association="CadastraDBModel.FK_Land_OwnerId">
             <End Role="Owner" EntitySet="Owners" />
             <End Role="Land" EntitySet="Lands" />
           </AssociationSet>
-          <AssociationSet Name="FK_LicenseRequest_ImmovableId" Association="CadastraDBModel.FK_LicenseRequest_ImmovableId">
+          <EntitySet Name="Cadastrs" EntityType="CadastraDBModel.Cadastr" />
+          <AssociationSet Name="FK_Land_CadastrId" Association="CadastraDBModel.FK_Land_CadastrId">
             <End Role="Cadastr" EntitySet="Cadastrs" />
+            <End Role="Land" EntitySet="Lands" />
+          </AssociationSet>
+          <EntitySet Name="LandTypes" EntityType="CadastraDBModel.LandType" />
+          <AssociationSet Name="FK_Land_LandTypeId" Association="CadastraDBModel.FK_Land_LandTypeId">
+            <End Role="LandType" EntitySet="LandTypes" />
+            <End Role="Land" EntitySet="Lands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Immovable_CadastrId" Association="CadastraDBModel.FK_Immovable_CadastrId">
+            <End Role="Cadastr" EntitySet="Cadastrs" />
+            <End Role="Immovable" EntitySet="Immovables" />
+          </AssociationSet>
+          <EntitySet Name="LicenseRequests" EntityType="CadastraDBModel.LicenseRequest" />
+          <AssociationSet Name="FK_LicenseRequest_LandId" Association="CadastraDBModel.FK_LicenseRequest_LandId">
+            <End Role="Land" EntitySet="Lands" />
             <End Role="LicenseRequest" EntitySet="LicenseRequests" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <Association Name="FK_Immovable_ImmovableTypeId">
           <End Type="CadastraDBModel.ImmovableType" Role="ImmovableType" Multiplicity="1" />
           <End Type="CadastraDBModel.Immovable" Role="Immovable" Multiplicity="*" />
@@ -548,18 +579,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Land_LandTypeId">
-          <End Type="CadastraDBModel.LandType" Role="LandType" Multiplicity="1" />
-          <End Type="CadastraDBModel.Land" Role="Land" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LandType">
-              <PropertyRef Name="LandTypeId" />
-            </Principal>
-            <Dependent Role="Land">
-              <PropertyRef Name="LandTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Land_OwnerId">
           <End Type="CadastraDBModel.Owner" Role="Owner" Multiplicity="1" />
           <End Type="CadastraDBModel.Land" Role="Land" Multiplicity="*" />
@@ -572,19 +591,82 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LicenseRequest_ImmovableId">
+        <EntityType Name="Cadastr">
+          <Key>
+            <PropertyRef Name="CadastrId" />
+          </Key>
+          <Property Name="CadastrId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Lands" Relationship="CadastraDBModel.FK_Land_CadastrId" FromRole="Cadastr" ToRole="Land" />
+          <NavigationProperty Name="Immovables" Relationship="CadastraDBModel.FK_Immovable_CadastrId" FromRole="Cadastr" ToRole="Immovable" />
+        </EntityType>
+        <Association Name="FK_Land_CadastrId">
           <End Type="CadastraDBModel.Cadastr" Role="Cadastr" Multiplicity="1" />
-          <End Type="CadastraDBModel.LicenseRequest" Role="LicenseRequest" Multiplicity="*" />
+          <End Type="CadastraDBModel.Land" Role="Land" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cadastr">
               <PropertyRef Name="CadastrId" />
             </Principal>
-            <Dependent Role="LicenseRequest">
+            <Dependent Role="Land">
               <PropertyRef Name="CadastrId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="LandType">
+          <Key>
+            <PropertyRef Name="LandTypeId" />
+          </Key>
+          <Property Name="LandTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Lands" Relationship="CadastraDBModel.FK_Land_LandTypeId" FromRole="LandType" ToRole="Land" />
+        </EntityType>
+        <Association Name="FK_Land_LandTypeId">
+          <End Type="CadastraDBModel.LandType" Role="LandType" Multiplicity="1" />
+          <End Type="CadastraDBModel.Land" Role="Land" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandType">
+              <PropertyRef Name="LandTypeId" />
+            </Principal>
+            <Dependent Role="Land">
+              <PropertyRef Name="LandTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Immovable_CadastrId">
+          <End Type="CadastraDBModel.Cadastr" Role="Cadastr" Multiplicity="1" />
+          <End Type="CadastraDBModel.Immovable" Role="Immovable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cadastr">
+              <PropertyRef Name="CadastrId" />
+            </Principal>
+            <Dependent Role="Immovable">
+              <PropertyRef Name="CadastrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LicenseRequest">
+          <Key>
+            <PropertyRef Name="LicenseId" />
+            <PropertyRef Name="LandId" />
+          </Key>
+          <Property Name="LicenseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LicenseReqState" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LandId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Land" Relationship="CadastraDBModel.FK_LicenseRequest_LandId" FromRole="LicenseRequest" ToRole="Land" />
+        </EntityType>
+        <Association Name="FK_LicenseRequest_LandId">
+          <End Type="CadastraDBModel.Land" Role="Land" Multiplicity="1" />
+          <End Type="CadastraDBModel.LicenseRequest" Role="LicenseRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Land">
+              <PropertyRef Name="LandId" />
+            </Principal>
+            <Dependent Role="LicenseRequest">
+              <PropertyRef Name="LandId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -645,17 +727,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Cadastrs">
-            <EntityTypeMapping TypeName="CadastraDBModel.Cadastr">
-              <MappingFragment StoreEntitySet="Cadastr">
-                <ScalarProperty Name="CadastrId" ColumnName="CadastrId" />
-                <ScalarProperty Name="CadastrTypeId" ColumnName="CadastrTypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Immovables">
             <EntityTypeMapping TypeName="CadastraDBModel.Immovable">
               <MappingFragment StoreEntitySet="Immovable">
+                <ScalarProperty Name="CadastrId" ColumnName="CadastrId" />
                 <ScalarProperty Name="ImmovableId" ColumnName="ImmovableId" />
                 <ScalarProperty Name="ImmovableTypeId" ColumnName="ImmovableTypeId" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -675,29 +750,13 @@
           <EntitySetMapping Name="Lands">
             <EntityTypeMapping TypeName="CadastraDBModel.Land">
               <MappingFragment StoreEntitySet="Land">
+                <ScalarProperty Name="CadastrId" ColumnName="CadastrId" />
                 <ScalarProperty Name="LandId" ColumnName="LandId" />
                 <ScalarProperty Name="LandTypeId" ColumnName="LandTypeId" />
                 <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LandTypes">
-            <EntityTypeMapping TypeName="CadastraDBModel.LandType">
-              <MappingFragment StoreEntitySet="LandType">
-                <ScalarProperty Name="LandTypeId" ColumnName="LandTypeId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LicenseRequests">
-            <EntityTypeMapping TypeName="CadastraDBModel.LicenseRequest">
-              <MappingFragment StoreEntitySet="LicenseRequest">
-                <ScalarProperty Name="LicenseReqState" ColumnName="LicenseReqState" />
-                <ScalarProperty Name="LicenseId" ColumnName="LicenseId" />
-                <ScalarProperty Name="CadastrId" ColumnName="CadastrId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -730,6 +789,31 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Cadastrs">
+            <EntityTypeMapping TypeName="CadastraDBModel.Cadastr">
+              <MappingFragment StoreEntitySet="Cadastr">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CadastrId" ColumnName="CadastrId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LandTypes">
+            <EntityTypeMapping TypeName="CadastraDBModel.LandType">
+              <MappingFragment StoreEntitySet="LandType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LandTypeId" ColumnName="LandTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LicenseRequests">
+            <EntityTypeMapping TypeName="CadastraDBModel.LicenseRequest">
+              <MappingFragment StoreEntitySet="LicenseRequest">
+                <ScalarProperty Name="LandId" ColumnName="LandId" />
+                <ScalarProperty Name="LicenseReqState" ColumnName="LicenseReqState" />
+                <ScalarProperty Name="LicenseId" ColumnName="LicenseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

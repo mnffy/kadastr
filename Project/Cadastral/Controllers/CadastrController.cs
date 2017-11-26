@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Cadastral.DAO;
+using Cadastral.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,10 +11,28 @@ namespace Cadastral.Controllers
 {
     public class CadastrController : Controller
     {
+
+        CadastrDAO _cad = new CadastrDAO();
+
         // GET: Cadastr
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var cadastras = await _cad.GetCadastras();
+            return View(cadastras);
         }
+
+        public async Task<ActionResult> Edit(int id)
+        {
+            var cadastr =  await _cad.GetCadastrById(id);
+            return View(cadastr);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(CadastrViewModel model)
+        {
+            await _cad.EditCadastr(model);
+            return RedirectToAction("Index");
+        }
+
     }
 }

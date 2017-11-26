@@ -7,12 +7,12 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "CreateLand")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LandId)
+            Cadastr
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Cost)
@@ -23,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
+        <th>
+            Owner
+        </th>
         <th></th>
     </tr>
 
@@ -30,7 +33,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.LandId)
+                @Html.DisplayFor(x => item.Cadastr.CadastrName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cost)
@@ -42,11 +45,21 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.LandId }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.Owner.Name)
+                @Html.DisplayFor(modelItem => item.Owner.Surname)
+            </td>
+            <td>
+                @Html.ActionLink("Edit Land data", "EditLand", new { id = item.LandId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.LandId })
             </td>
         </tr>
     }
 
+
 </table>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Cadastr")
+</div>
+

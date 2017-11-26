@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Cadastral.Models.CadastrViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Cadastras</h2>
+
+<table class="table">
+    <tr>
+        <th>
+           Cadastr Name
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>           
+            <td>
+                @Html.DisplayFor(modelItem => item.CadastrName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CadastrId }) |
+                @if (item.CadastrId == 1)
+                {
+                    @Html.ActionLink("List immovables", "Index", "Immovable")
+                }
+                else
+                {
+                    @Html.ActionLink("List lands", "Index", "Land") 
+                }                
+               
+            </td>
+        </tr>
+    }
+
+   
+
+
+</table>

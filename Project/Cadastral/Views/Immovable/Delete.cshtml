@@ -1,4 +1,4 @@
-﻿@model Cadastral.Models.LandViewModel
+﻿@model Cadastral.Models.ImmovableViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -8,7 +8,7 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Land</h4>
+    <h4>ImmovableViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
 
@@ -17,7 +17,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LandType.LandTypeName)
+            @Html.DisplayFor(model => model.ImmovableType.ImmovableTypeName)
         </dd>
 
         <dt>
@@ -25,7 +25,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Owner.Owner)
+            @Html.DisplayFor(model => model.Onwer.Owner)
         </dd>
 
         <dt>
@@ -37,6 +37,22 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.ImmovableId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImmovableId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Cost)
         </dt>
 
@@ -44,26 +60,9 @@
             @Html.DisplayFor(model => model.Cost)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Area)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Area)
-        </dd>
-
-        <dt>
-          Address
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
     </dl>
 
-    @using (Html.BeginForm())
-    {
+    @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

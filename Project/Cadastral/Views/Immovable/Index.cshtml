@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Cadastral.Models.ImmovableViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Immovable Type
+        </th>
+        <th>
+            Cadastr
+        </th>
+        <th>
+            Owner
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImmovableType.ImmovableTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cadastr.CadastrName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Onwer.Owner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ImmovableId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ImmovableId })
+            </td>
+        </tr>
+    }
+
+</table>

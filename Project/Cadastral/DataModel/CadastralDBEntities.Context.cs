@@ -30,13 +30,13 @@ namespace Cadastral.DataModel
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Cadastr> Cadastrs { get; set; }
         public virtual DbSet<Immovable> Immovables { get; set; }
         public virtual DbSet<ImmovableType> ImmovableTypes { get; set; }
         public virtual DbSet<Land> Lands { get; set; }
-        public virtual DbSet<LandType> LandTypes { get; set; }
-        public virtual DbSet<LicenseRequest> LicenseRequests { get; set; }
         public virtual DbSet<Owner> Owners { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Cadastr> Cadastrs { get; set; }
+        public virtual DbSet<LandType> LandTypes { get; set; }
+        public virtual DbSet<LicenseRequest> LicenseRequests { get; set; }
     }
 }
