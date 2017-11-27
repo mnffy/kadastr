@@ -32,7 +32,7 @@ namespace Cadastral.DAO
 
         public async Task<OwnerViewModel> GetOwnerById(int ownerId) =>
              await (from owner in _edm.Owners
-                    where owner.OwnerId > ownerId
+                    where owner.OwnerId == ownerId
                     select new OwnerViewModel
                     {
                         OwnerId = owner.OwnerId,
@@ -49,8 +49,7 @@ namespace Cadastral.DAO
                 throw new Exception("Модель для редактирования пустая!");
             entity.Name = model.Name;
             entity.Surname = model.Surname;
-            entity.DateBirth = model.BirthDate;
-            _edm.Owners.Add(entity);
+            entity.DateBirth = model.BirthDate;            
             await _edm.SaveChangesAsync();
         }
 

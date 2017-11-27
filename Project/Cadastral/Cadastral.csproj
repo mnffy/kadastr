@@ -356,10 +356,13 @@
     <Content Include="Views\Immovable\Create.cshtml" />
     <Content Include="Views\Immovable\Edit.cshtml" />
     <Content Include="Views\Immovable\Delete.cshtml" />
+    <Content Include="Views\Owner\Index.cshtml" />
+    <Content Include="Views\Owner\CreateOwner.cshtml" />
+    <Content Include="Views\Owner\EditOwnerData.cshtml" />
+    <Content Include="Views\Owner\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Owner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

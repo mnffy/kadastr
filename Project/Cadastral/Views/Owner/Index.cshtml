@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Cadastral.Models.OwnerViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Onwers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateOwner")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditOwnerData", new { id = item.OwnerId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.OwnerId })
+            </td>
+        </tr>
+    }
+
+</table>
