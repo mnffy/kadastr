@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Cadastral.Models.LicenseRequestModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Licens requests</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LicenseId)
+        </th>
+        <th>
+            Cadastr
+        </th>
+        <th>
+            Land Type
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Land.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Land.Area)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner.Owner)
+        </th>
+        <th>
+            License request state
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LicenseId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cadastr.CadastrName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Land.LandType.LandTypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Land.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Land.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner.Owner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LiicenseRequestState)
+            </td>
+            <td>
+                @Html.ActionLink("Edit data", "EditLicense", new { id = item.LicenseId }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>

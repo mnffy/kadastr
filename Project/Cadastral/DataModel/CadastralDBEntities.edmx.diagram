@@ -21,7 +21,7 @@
         <AssociationConnector Association="CadastraDBModel.FK_Immovable_ImmovableTypeId" />
         <AssociationConnector Association="CadastraDBModel.FK_Immovable_OwnerId" />
         <AssociationConnector Association="CadastraDBModel.FK_Land_OwnerId" />
-        <EntityTypeShape EntityType="CadastraDBModel.Cadastr" Width="1.5" PointX="9.125" PointY="4" />
+        <EntityTypeShape EntityType="CadastraDBModel.Cadastr" Width="1.5" PointX="10.875" PointY="4.25" />
         <AssociationConnector Association="CadastraDBModel.FK_Land_CadastrId" />
         <EntityTypeShape EntityType="CadastraDBModel.LandType" Width="1.5" PointX="7.375" PointY="9.875" />
         <AssociationConnector Association="CadastraDBModel.FK_Land_LandTypeId" />

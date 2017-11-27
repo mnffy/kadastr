@@ -12,5 +12,7 @@ namespace Cadastral.Models
         public CadastrViewModel Cadastr { get; set; }
         [Required]
         public string LiicenseRequestState { get; set; }
+        public OwnerViewModel Owner { get; set; }
+        public LandViewModel Land { get; set; }
     }
 }

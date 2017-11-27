@@ -196,11 +196,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImmovableController.cs" />
     <Compile Include="Controllers\LandController.cs" />
+    <Compile Include="Controllers\LicenseController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="DAO\CadastrDAO.cs" />
     <Compile Include="DAO\ImmovableDAO.cs" />
     <Compile Include="DAO\LandDAO.cs" />
+    <Compile Include="DAO\LicenseDAO.cs" />
     <Compile Include="DAO\OwnerDAO.cs" />
     <Compile Include="DataModel\AspNetRole.cs">
       <DependentUpon>CadastralDBEntities.tt</DependentUpon>
@@ -360,6 +362,8 @@
     <Content Include="Views\Owner\CreateOwner.cshtml" />
     <Content Include="Views\Owner\EditOwnerData.cshtml" />
     <Content Include="Views\Owner\Delete.cshtml" />
+    <Content Include="Views\License\Index.cshtml" />
+    <Content Include="Views\License\EditLicense.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
