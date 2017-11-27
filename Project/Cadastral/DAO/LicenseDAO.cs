@@ -111,24 +111,28 @@ namespace Cadastral.DAO
         {
             var licEntity = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == id);
             licEntity.LicenseReqState = "Accepted";
+            _edm.SaveChanges();
         }
 
         public void Reject(int id)
         {
             var licEntity = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == id);
             licEntity.LicenseReqState = "Rejected";
+            _edm.SaveChanges();
         }
 
         public void NotAccepted(int id)
         {
             var licEntity = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == id);
             licEntity.LicenseReqState = "Not Accepted";
+            _edm.SaveChanges();
         }
 
         public void SentToRevision(int id)
         {
             var licEntity = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == id);
-            licEntity.LicenseReqState = "Sent for revision";
+            licEntity.LicenseReqState = "Sened for revision";
+            _edm.SaveChanges();
         }
 
     }

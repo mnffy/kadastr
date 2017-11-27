@@ -61,7 +61,9 @@
             </td>
             <td>
                 @Html.ActionLink("Edit data", "EditLicense", new { id = item.LicenseId }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Accept", "Accept", new { id = item.LicenseId }) |
+                @Html.ActionLink("Reject", "Reject", new { id = item.LicenseId }) |
+                @Html.ActionLink("Sent for revision", "SentToRevision", new { id = item.LicenseId }) |
             </td>
         </tr>
     }

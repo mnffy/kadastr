@@ -16,13 +16,13 @@ namespace Cadastral.DataModel
     {
         public int ImmovableId { get; set; }
         public int ImmovableTypeId { get; set; }
-        public string Address { get; set; }
         public int OwnerId { get; set; }
         public decimal Cost { get; set; }
         public int CadastrId { get; set; }
+        public string Address { get; set; }
     
+        public virtual Cadastr Cadastr { get; set; }
         public virtual ImmovableType ImmovableType { get; set; }
         public virtual Owner Owner { get; set; }
-        public virtual Cadastr Cadastr { get; set; }
     }
 }

@@ -62,7 +62,7 @@ namespace Cadastral.Controllers
 
         public ActionResult SentToRevision(int id)
         {
-            _license.Reject(id);
+            _license.SentToRevision(id);
             return RedirectToAction("Index");
         }
 
