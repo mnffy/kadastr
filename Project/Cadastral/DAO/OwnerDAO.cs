@@ -49,7 +49,7 @@ namespace Cadastral.DAO
                 throw new Exception("Модель для редактирования пустая!");
             entity.Name = model.Name;
             entity.Surname = model.Surname;
-            entity.DateBirth = model.BirthDate;            
+            entity.DateBirth = model.BirthDate;
             await _edm.SaveChangesAsync();
         }
 
@@ -68,7 +68,8 @@ namespace Cadastral.DAO
             {
                 Name = model.Name,
                 Surname = model.Surname,
-                DateBirth = model.BirthDate
+                DateBirth = model.BirthDate,
+                UserId = model.UserId
             };
             _edm.Owners.Add(owner);
             await _edm.SaveChangesAsync();

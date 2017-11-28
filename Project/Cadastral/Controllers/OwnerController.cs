@@ -9,11 +9,13 @@ using System.Web.Mvc;
 
 namespace Cadastral.Controllers
 {
+    [Authorize]
     public class OwnerController : Controller
     {
 
         OwnerDAO _owner = new OwnerDAO();
 
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var owners = await _owner.GetOwners();
@@ -21,11 +23,14 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administration,Moderator")]
         public ActionResult CreateOwner()
         {
             return View();
         }
+
         [HttpPost]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> CreateOwner(OwnerViewModel model)
         {
             if (ModelState.IsValid && model != null)
@@ -36,6 +41,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> EditOwnerData(int id)
         {
             var owner = await _owner.GetOwnerById(id);
@@ -43,6 +49,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> EditOwnerData(OwnerViewModel model)
         {
             if (ModelState.IsValid && model != null)
@@ -53,6 +60,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> Delete(int id)
         {
             var owner = await _owner.GetOwnerById(id);
@@ -60,6 +68,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> Delete(OwnerViewModel model)
         {
             if (ModelState.IsValid && model != null)

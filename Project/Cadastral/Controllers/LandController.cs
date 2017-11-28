@@ -23,6 +23,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult CreateLand()
         {
             InitDynamicViewBag();
@@ -46,6 +47,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> CreateLand(LandViewModel model)
         {
             try
@@ -63,6 +65,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> EditLand(int id)
         {
             InitDynamicViewBag();
@@ -79,6 +82,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> EditLand(LandViewModel model)
         {
             try
@@ -96,6 +100,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> Delete(int id)
         {
             var land = await _land.GetLandById(id);
@@ -103,6 +108,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> Delete(LandViewModel model)
         {
             try

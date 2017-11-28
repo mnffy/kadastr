@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Cadastral.Controllers
 {
+    [Authorize]
     public class LicenseController : Controller
     {
         private CadastraDBEntities _edmx = new CadastraDBEntities();
@@ -21,6 +22,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult EditLicense(int id)
         {
             var landTypes = new SelectList(_edmx.LandTypes.ToList(), "LandTypeId", "Name");
@@ -39,6 +41,7 @@ namespace Cadastral.Controllers
             return View(license);
         }
 
+        [Authorize]
         public ActionResult EditLicense(LicenseRequestModel model)
         {
             if (ModelState.IsValid && model != null)
@@ -48,18 +51,21 @@ namespace Cadastral.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Administration, Moderator")]
         public ActionResult Accept(int id)
         {
             _license.Accept(id);
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Administration, Moderator")]
         public ActionResult Reject(int id)
         {
             _license.Reject(id);
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Administration, Moderator")]
         public ActionResult SentToRevision(int id)
         {
             _license.SentToRevision(id);

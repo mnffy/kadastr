@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Cadastral.Controllers
 {
+    [Authorize]
     public class CadastrController : Controller
     {
 
@@ -21,6 +22,7 @@ namespace Cadastral.Controllers
             return View(cadastras);
         }
 
+        [Authorize(Roles = "Administration")]
         public async Task<ActionResult> Edit(int id)
         {
             var cadastr =  await _cad.GetCadastrById(id);
@@ -28,6 +30,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administration")]
         public async Task<ActionResult> Edit(CadastrViewModel model)
         {
             await _cad.EditCadastr(model);

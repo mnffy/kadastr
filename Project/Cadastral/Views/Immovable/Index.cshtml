@@ -7,7 +7,11 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (User.IsInRole("Administration") || User.IsInRole("Moderator"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+
 </p>
 <table class="table">
     <tr>
@@ -48,8 +52,12 @@
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ImmovableId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ImmovableId })
+                @if (User.IsInRole("Administration") || User.IsInRole("Moderator"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ImmovableId })
+                }
+                |
+                @Html.ActionLink("Edit", "Edit", new { id = item.ImmovableId })
             </td>
         </tr>
     }

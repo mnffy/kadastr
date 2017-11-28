@@ -9,33 +9,37 @@
 <table class="table">
     <tr>
         <th>
-           Cadastr Name
+            Cadastr Name
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>           
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CadastrName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CadastrId }) |
+                @if (User.IsInRole("Administration") || User.IsInRole("Moderator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CadastrId })
+                }
+                |
                 @if (item.CadastrId == 1)
                 {
                     @Html.ActionLink("List immovables", "Index", "Immovable")
                 }
                 else
                 {
-                    @Html.ActionLink("List lands", "Index", "Land") 
-                }                
-               
+                    @Html.ActionLink("List lands", "Index", "Land")
+                }
+
             </td>
         </tr>
     }
 
-   
+
 
 
 </table>

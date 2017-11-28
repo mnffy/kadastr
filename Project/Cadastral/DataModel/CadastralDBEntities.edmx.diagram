@@ -5,22 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5bb196e141bb4e41be07a43845944863" Name="Diagram1">
-        <EntityTypeShape EntityType="CadastraDBModel.C__MigrationHistory" PointX="8.75" PointY="4.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.AspNetRole" PointX="7.375" PointY="11.375" Width="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.AspNetUserClaim" PointX="12.75" PointY="9.875" Width="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CadastraDBModel.AspNetUserLogin" PointX="12.75" PointY="12.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.AspNetUser" PointX="10.5" PointY="10.125" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.sysdiagram" PointX="8.75" PointY="1.875" Width="1.5" IsExpanded="true" />
-        <AssociationConnector ManuallyRouted="false" Association="CadastraDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
-        <AssociationConnector ManuallyRouted="false" Association="CadastraDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector ManuallyRouted="false" Association="CadastraDBModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="CadastraDBModel.Cadastr" Width="1.5" PointX="0.75" PointY="3.625" />
-        <EntityTypeShape EntityType="CadastraDBModel.Immovable" Width="1.5" PointX="3" PointY="3.125" />
-        <EntityTypeShape EntityType="CadastraDBModel.ImmovableType" Width="1.5" PointX="0.75" PointY="1.25" />
-        <EntityTypeShape EntityType="CadastraDBModel.Land" Width="1.5" PointX="6" PointY="3" />
-        <EntityTypeShape EntityType="CadastraDBModel.LandType" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CadastraDBModel.LicenseRequest" Width="1.5" PointX="8.25" PointY="7.625" />
-        <EntityTypeShape EntityType="CadastraDBModel.Owner" Width="1.5" PointX="0.75" PointY="6.625" />
+        <EntityTypeShape EntityType="CadastraDBModel.sysdiagram" PointX="13.25" PointY="0.625" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CadastraDBModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="8.5" />
+        <EntityTypeShape EntityType="CadastraDBModel.AspNetRole" Width="1.5" PointX="8.625" PointY="12.125" />
+        <EntityTypeShape EntityType="CadastraDBModel.AspNetUser" Width="1.5" PointX="10.875" PointY="10.875" />
+        <EntityTypeShape EntityType="CadastraDBModel.Cadastr" Width="1.5" PointX="0.75" PointY="4.25" />
+        <EntityTypeShape EntityType="CadastraDBModel.Immovable" Width="1.5" PointX="6" PointY="3.875" />
+        <EntityTypeShape EntityType="CadastraDBModel.ImmovableType" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CadastraDBModel.Land" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="CadastraDBModel.LandType" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="CadastraDBModel.LicenseRequest" Width="1.5" PointX="5.25" PointY="8.25" />
+        <EntityTypeShape EntityType="CadastraDBModel.Owner" Width="1.5" PointX="3.75" PointY="12.125" />
+        <AssociationConnector Association="CadastraDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="CadastraDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="CadastraDBModel.FK_Owner_AspNetUsers" />
         <AssociationConnector Association="CadastraDBModel.FK_Immovable_CadastrId" />
         <AssociationConnector Association="CadastraDBModel.FK_Land_CadastrId" />
         <AssociationConnector Association="CadastraDBModel.FK_Immovable_ImmovableTypeId" />
@@ -28,6 +28,7 @@
         <AssociationConnector Association="CadastraDBModel.FK_Land_LandTypeId" />
         <AssociationConnector Association="CadastraDBModel.FK_Land_OwnerId" />
         <AssociationConnector Association="CadastraDBModel.FK_LicenseRequest_LandId" />
+        <AssociationConnector Association="CadastraDBModel.AspNetUserRoles" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

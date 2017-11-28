@@ -10,6 +10,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Cadastral.Models;
 using Cadastral.DAO;
+using Cadastral.DataModel;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Cadastral.Controllers
 {
@@ -19,6 +24,7 @@ namespace Cadastral.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private OwnerDAO _owner = new OwnerDAO();
+        private CadastraDBEntities _edm = new CadastraDBEntities();
 
         public AccountController()
         {
@@ -130,6 +136,13 @@ namespace Cadastral.Controllers
             return View();
         }
 
+        private async Task<IEnumerable<AspNetRole>> GetRoles()
+        {
+            var roles = await _edm.AspNetRoles.Select(x => x).ToListAsync();
+            return roles;
+        }
+
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -138,11 +151,19 @@ namespace Cadastral.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var roles = await GetRoles();
+                IdentityUserRole role = new IdentityUserRole
+                {
+                    RoleId = "3",
+                    UserId = user.Id
+                };
+                user.Roles.Add(role);
                 var result = await UserManager.CreateAsync(user, model.Password);
-                await _owner.CreateOwner(model.Owner);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    model.Owner.UserId = user.Id;
+                    await _owner.CreateOwner(model.Owner);
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

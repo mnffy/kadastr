@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace Cadastral.Controllers
 {
+    [Authorize]
     public class ImmovableController : Controller
     {
         ImmovableDAO _im = new ImmovableDAO();
@@ -22,6 +23,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Create()
         {
             InitDynamicViewBag();
@@ -29,6 +31,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Create(ImmovableViewModel model)
         {
             if (ModelState.IsValid && model != null)
@@ -39,6 +42,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
             InitDynamicViewBag();
@@ -64,6 +68,7 @@ namespace Cadastral.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Edit(ImmovableViewModel model)
         {
             if (ModelState.IsValid && model != null)
@@ -74,6 +79,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> Delete(int id)
         {
             var im = await _im.GetImmovableById(id);
@@ -81,6 +87,7 @@ namespace Cadastral.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administration,Moderator")]
         public async Task<ActionResult> Delete(ImmovableViewModel model)
         {
             try

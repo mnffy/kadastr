@@ -16,6 +16,7 @@ namespace Cadastral.Models
         [Required]
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
+        public string UserId { get; set; }
         public string Owner => $"{Name} {Surname}";
     }
 }
