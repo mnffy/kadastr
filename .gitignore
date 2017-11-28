@@ -180,15 +180,11 @@ Project/Cadastral/obj/Debug/CoreCompileInputs.cache
 Project/Cadastral/obj/Debug/Cadastral.pdb
 Project/Cadastral/obj/Debug/Cadastral.dll
 Project/Cadastral/Cadastral.csproj.user
-Project/.vs/Cadastral/v15/.suo
-Project/.vs/Cadastral/v15/Server/sqlite3/storage.ide-shm
-Project/.vs/Cadastral/v15/Server/sqlite3/db.lock
-Project/.vs/Cadastral/v15/Server/sqlite3/storage.ide-wal
-Project/.vs/Cadastral/v15/Server/sqlite3/storage.ide
-Project/.vs/config/applicationhost.config
 Project/Cadastral/obj/Debug/Cadastral.csprojResolveAssemblyReference.cache
 Project/Cadastral/obj/Debug/Cadastral.csproj.FileListAbsolute.txt
 Project/Cadastral/obj/Debug/Cadastral.csproj.CoreCompileInputs.cache
 Project/Cadastral/obj/Debug/Cadastral.csproj.CopyComplete
 Project/Cadastral.Tests/obj/Debug/Cadastral.Tests.csproj.CoreCompileInputs.cache
 Project/Cadastral.Tests/obj/Debug/Cadastral.Tests.csproj.CopyComplete
+Project/.vs/Cadastral/v15/.suo
+Project/.vs/config/applicationhost.config
