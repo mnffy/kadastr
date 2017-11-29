@@ -1,4 +1,5 @@
-﻿using Cadastral.Models;
+﻿using Cadastral.DataModel;
+using Cadastral.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -9,105 +10,54 @@ using System.Web.Mvc;
 
 namespace Cadastral.Controllers
 {
+    [Authorize(Roles = "Administration")]
     public class RoleController : Controller
     {
-        ApplicationDbContext context;
+        private CadastraDBEntities _edm = new CadastraDBEntities();
 
         public RoleController()
         {
-            context = new ApplicationDbContext();
         }
 
-        /// <summary>
-        /// Get All Roles
-        /// </summary>
-        /// <returns></returns>
+        [Authorize(Roles = "Administration")]
         public ActionResult Index()
         {
-
-            if (User.Identity.IsAuthenticated)
-            {
-
-
-                if (!isAdminUser())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var Roles = context.Roles.ToList();
-            return View(Roles);
-
+            var users = GetUsers();
+            return View(users);
         }
-        public Boolean isAdminUser()
+
+        private List<RegisterViewModel> GetUsers()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                var user = User.Identity;
-                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var s = UserManager.GetRoles(user.GetUserId());
-                if (s[0].ToString() == "Admin")
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            return false;
+            var users = (from user in _edm.AspNetUsers
+                         join owner in _edm.Owners on user.Id equals owner.UserId
+                         select new RegisterViewModel
+                         {
+                             UserId = user.Id,
+                             Email = user.Email,
+                             Owner = new OwnerViewModel
+                             {
+                                 Name = owner.Name,
+                                 Surname = owner.Surname,
+                                 BirthDate = owner.DateBirth
+                             },
+                             Role = new RoleViewModel
+                             {
+                                 Id = user.AspNetRoles.FirstOrDefault().Id,
+                                 RoleName = user.AspNetRoles.FirstOrDefault().Name
+                             }
+                         }).ToList();
+            return users;
         }
-        /// <summary>
-        /// Create  a New role
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Create()
+
+        [HttpGet]
+        [Authorize(Roles = "Administration")]
+        public ActionResult ChangeUserRole(string userId)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-
-
-                if (!isAdminUser())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var Role = new IdentityRole();
-            return View(Role);
+            var reg = GetUsers().FirstOrDefault(x => x.UserId == userId);
+            var roles = new SelectList(_edm.AspNetRoles.ToList(), "Id", "Name");
+            ViewBag.Roles = roles;
+            return View(reg);
         }
 
-        /// <summary>
-        /// Create a New Role
-        /// </summary>
-        /// <param name="Role"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult Create(IdentityRole Role)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                if (!isAdminUser())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            context.Roles.Add(Role);
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
     }
 }

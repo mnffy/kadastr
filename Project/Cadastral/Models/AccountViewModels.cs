@@ -62,6 +62,8 @@ namespace Cadastral.Models
         public bool RememberMe { get; set; }
     }
 
+
+
     public class RegisterViewModel
     {
         [Required]
@@ -80,6 +82,14 @@ namespace Cadastral.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
         public OwnerViewModel Owner { get; set; }
+        public RoleViewModel Role { get; set; }
+        public string UserId { get; set; }
+    }
+
+    public class RoleViewModel
+    {
+        public string Id { get; set; }
+        public string RoleName { get; set; }
     }
 
     public class ResetPasswordViewModel

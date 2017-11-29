@@ -89,7 +89,7 @@ namespace Cadastral.DAO
             entity.Address = model.Address;
             entity.Area = model.Area;
             entity.Cost = model.Cost;
-            entity.CadastrId = model.Cadastr.CadastrId > 0 ? model.Cadastr.CadastrId : entity.CadastrId;
+            entity.CadastrId = model.Cadastr.CadastrId > 0 ? model.Cadastr.CadastrId : entity.CadastrId;           
             await _edmx.SaveChangesAsync();
         }
 
@@ -105,6 +105,13 @@ namespace Cadastral.DAO
                 CadastrId = model.Cadastr.CadastrId
             };
             _edmx.Lands.Add(land);
+            await _edmx.SaveChangesAsync();
+            var license = new LicenseRequest
+            {
+                LandId = land.LandId,
+                LicenseReqState = "Not Accepted"
+            };
+            _edmx.LicenseRequests.Add(license);
             await _edmx.SaveChangesAsync();
         }
 

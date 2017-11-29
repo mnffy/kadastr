@@ -28,6 +28,10 @@
                     <li>@Html.ActionLink("Cadastras", "Index", "Cadastr")</li>
                     <li>@Html.ActionLink("Owners", "Index", "Owner")</li>
                     <li>@Html.ActionLink("License requests", "Index", "License")</li>
+                    @if (User.IsInRole("Administration"))
+                    {
+                        <li>@Html.ActionLink("User management", "Index", "Role")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -366,10 +366,10 @@
     <Content Include="Views\Owner\Delete.cshtml" />
     <Content Include="Views\License\Index.cshtml" />
     <Content Include="Views\License\EditLicense.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Role\" />
     <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
