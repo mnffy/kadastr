@@ -4,20 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5bb196e141bb4e41be07a43845944863" Name="Diagram1">
-        <EntityTypeShape EntityType="CadastraDBModel.AspNetUserClaim" PointX="12.75" PointY="9.875" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.AspNetUserLogin" PointX="12.75" PointY="12.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.sysdiagram" PointX="13.25" PointY="0.625" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CadastraDBModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="8.5" />
-        <EntityTypeShape EntityType="CadastraDBModel.AspNetRole" Width="1.5" PointX="8.625" PointY="12.125" />
-        <EntityTypeShape EntityType="CadastraDBModel.AspNetUser" Width="1.5" PointX="10.875" PointY="10.875" />
-        <EntityTypeShape EntityType="CadastraDBModel.Cadastr" Width="1.5" PointX="0.75" PointY="4.25" />
-        <EntityTypeShape EntityType="CadastraDBModel.Immovable" Width="1.5" PointX="6" PointY="3.875" />
-        <EntityTypeShape EntityType="CadastraDBModel.ImmovableType" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CadastraDBModel.Land" Width="1.5" PointX="3" PointY="3.625" />
-        <EntityTypeShape EntityType="CadastraDBModel.LandType" Width="1.5" PointX="0.75" PointY="1.375" />
-        <EntityTypeShape EntityType="CadastraDBModel.LicenseRequest" Width="1.5" PointX="5.25" PointY="8.25" />
-        <EntityTypeShape EntityType="CadastraDBModel.Owner" Width="1.5" PointX="3.75" PointY="12.125" />
+      <Diagram DiagramId="5bb196e141bb4e41be07a43845944863" Name="Diagram1" ZoomLevel="111">
+        <EntityTypeShape EntityType="CadastraDBModel.AspNetUserClaim" PointX="12.75" PointY="6.375" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CadastraDBModel.AspNetUserLogin" PointX="10.5" PointY="9.875" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CadastraDBModel.AspNetRole" Width="1.5" PointX="8.625" PointY="8.625" />
+        <EntityTypeShape EntityType="CadastraDBModel.AspNetUser" Width="1.5" PointX="10.5" PointY="5.375" />
+        <EntityTypeShape EntityType="CadastraDBModel.Cadastr" Width="1.5" PointX="1.875" PointY="4.75" />
+        <EntityTypeShape EntityType="CadastraDBModel.Immovable" Width="1.5" PointX="4.125" PointY="2.75" />
+        <EntityTypeShape EntityType="CadastraDBModel.ImmovableType" Width="1.5" PointX="4.125" PointY="0.625" />
+        <EntityTypeShape EntityType="CadastraDBModel.Land" Width="1.5" PointX="4.125" PointY="5.875" />
+        <EntityTypeShape EntityType="CadastraDBModel.LandType" Width="1.5" PointX="4.125" PointY="9.625" />
+        <EntityTypeShape EntityType="CadastraDBModel.LicenseRequest" Width="1.5" PointX="6.625" PointY="8" />
+        <EntityTypeShape EntityType="CadastraDBModel.Owner" Width="1.5" PointX="7" PointY="5" />
         <AssociationConnector Association="CadastraDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="CadastraDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="CadastraDBModel.FK_Owner_AspNetUsers" />

@@ -20,7 +20,7 @@ namespace Cadastral.DAO
 
         public async Task<List<LandViewModel>> GetLands() =>
             await (from land in _edmx.Lands
-                   where land.LandId > 0
+                   where land.CadastrId == 2
                    select new LandViewModel
                    {
                        Cadastr = new CadastrViewModel
@@ -117,11 +117,15 @@ namespace Cadastral.DAO
 
         public async Task RemoveLand(LandViewModel model)
         {
+            var licensee = await _edmx.LicenseRequests.FirstOrDefaultAsync(x => x.LandId == model.LandId);
             var entity = await (from land in _edmx.Lands
                                 where land.LandId == model.LandId
                                 select land).FirstOrDefaultAsync();
             if (entity == null)
                 throw new Exception("Модель для удаления пустая!");
+            if(licensee == null)
+                throw new Exception("Модель для удаления пустая!");
+            _edmx.LicenseRequests.Remove(licensee);
             _edmx.Lands.Remove(entity);
             await _edmx.SaveChangesAsync();
         }

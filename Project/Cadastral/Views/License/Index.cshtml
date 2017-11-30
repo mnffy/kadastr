@@ -2,13 +2,11 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Licens requests</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -60,12 +58,16 @@
                 @Html.DisplayFor(modelItem => item.LiicenseRequestState)
             </td>
             <td>
-                @Html.ActionLink("Edit data", "EditLicense", new { id = item.LicenseId }) |
-                @Html.ActionLink("Accept", "Accept", new { id = item.LicenseId }) |
-                @Html.ActionLink("Reject", "Reject", new { id = item.LicenseId }) |
-                @Html.ActionLink("Sent for revision", "SentToRevision", new { id = item.LicenseId }) |
+                @if (User.IsInRole("Administration") || User.IsInRole("Moderator"))
+                {
+                @Html.ActionLink("Edit data", "EditLicense", new { id = item.LicenseId }) <text>|</text>
+                @Html.ActionLink("Accept", "Accept", new { id = item.LicenseId }) <text>|</text>
+                @Html.ActionLink("Reject", "Reject", new { id = item.LicenseId }) <text>|</text>
+                @Html.ActionLink("Sent for revision", "SentToRevision", new { id = item.LicenseId }) <text>|</text>
+}
+
             </td>
         </tr>
-    }
+                }
 
 </table>

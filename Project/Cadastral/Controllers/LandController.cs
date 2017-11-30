@@ -27,7 +27,20 @@ namespace Cadastral.Controllers
         public ActionResult CreateLand()
         {
             InitDynamicViewBag();
-            return View();
+            var user = _edmx.AspNetUsers.FirstOrDefault(x => x.UserName == User.Identity.Name);
+            var owner = _edmx.Owners.FirstOrDefault(x => x.UserId == user.Id);
+            var land = new LandViewModel
+            {
+                Name = owner.Name,
+                Surname = owner.Surname,
+                CurrentUserId = user.Id,
+                Cadastr = new CadastrViewModel
+                {
+                    CadastrId = 2,
+                    CadastrName = "Land"
+                }
+            };
+            return View(land);
         }
 
         private void InitDynamicViewBag()
@@ -43,7 +56,7 @@ namespace Cadastral.Controllers
             var cadastras = new SelectList(_edmx.Cadastrs.ToList(), "CadastrId", "Name");
             ViewBag.LandTypes = landTypes;
             ViewBag.Owners = owners;
-            ViewBag.Cadastras = cadastras;
+            ViewBag.Cadastras = cadastras;            
         }
 
         [HttpPost]
@@ -52,7 +65,16 @@ namespace Cadastral.Controllers
         {
             try
             {
-                if (model != null && ModelState.IsValid)
+                if(model.Owner == null)
+                {
+                    var user = _edmx.AspNetUsers.FirstOrDefault(x => x.UserName == User.Identity.Name);
+                    var owner = _edmx.Owners.FirstOrDefault(x => x.UserId == user.Id);
+                    model.Owner = new OwnerViewModel();                    
+                    model.Owner.OwnerId = owner.OwnerId;
+                    model.Cadastr = new CadastrViewModel();
+                    model.Cadastr.CadastrId = 2;
+                }
+                if (model != null)
                     await _land.CreateLand(model);
                 else
                     throw new Exception();
@@ -87,6 +109,15 @@ namespace Cadastral.Controllers
         {
             try
             {
+                if (model.Owner == null)
+                {
+                    var user = _edmx.AspNetUsers.FirstOrDefault(x => x.UserName == User.Identity.Name);
+                    var owner = _edmx.Owners.FirstOrDefault(x => x.UserId == user.Id);
+                    model.Owner = new OwnerViewModel();
+                    model.Owner.OwnerId = owner.OwnerId;
+                    model.Cadastr = new CadastrViewModel();
+                    model.Cadastr.CadastrId = 2;
+                }
                 if (model != null && ModelState.IsValid)
                     await _land.EditLand(model);
                 else
@@ -113,7 +144,7 @@ namespace Cadastral.Controllers
         {
             try
             {
-                if (ModelState.IsValid && model != null)
+                if (model != null)
                     await _land.RemoveLand(model);
                 else
                     throw new Exception();

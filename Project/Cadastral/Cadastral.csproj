@@ -236,9 +236,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CadastralDBEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\C__MigrationHistory.cs">
-      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataModel\Immovable.cs">
       <DependentUpon>CadastralDBEntities.tt</DependentUpon>
     </Compile>
@@ -255,9 +252,6 @@
       <DependentUpon>CadastralDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Owner.cs">
-      <DependentUpon>CadastralDBEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataModel\sysdiagram.cs">
       <DependentUpon>CadastralDBEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">

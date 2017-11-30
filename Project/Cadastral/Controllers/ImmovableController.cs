@@ -27,14 +27,36 @@ namespace Cadastral.Controllers
         public ActionResult Create()
         {
             InitDynamicViewBag();
-            return View();
+            var user = _edmx.AspNetUsers.FirstOrDefault(x => x.UserName == User.Identity.Name);
+            var owner = _edmx.Owners.FirstOrDefault(x => x.UserId == user.Id);
+            var immovable = new ImmovableViewModel
+            {
+                Name = owner.Name,
+                Surname = owner.Surname,
+                CurrentUserId = user.Id,
+                Cadastr = new CadastrViewModel
+                {
+                    CadastrId = 2,
+                    CadastrName = "Immovable"
+                }
+            };
+            return View(immovable);
         }
 
         [HttpPost]
         [Authorize]
         public async Task<ActionResult> Create(ImmovableViewModel model)
         {
-            if (ModelState.IsValid && model != null)
+            if (model.Onwer == null)
+            {
+                var user = _edmx.AspNetUsers.FirstOrDefault(x => x.UserName == User.Identity.Name);
+                var owner = _edmx.Owners.FirstOrDefault(x => x.UserId == user.Id);
+                model.Onwer = new OwnerViewModel();
+                model.Onwer.OwnerId = owner.OwnerId;
+                model.Cadastr = new CadastrViewModel();
+                model.Cadastr.CadastrId = 1;
+            }
+            if (model != null)
             {
                 await _im.CreateImmovable(model);
             }
@@ -71,7 +93,16 @@ namespace Cadastral.Controllers
         [Authorize]
         public async Task<ActionResult> Edit(ImmovableViewModel model)
         {
-            if (ModelState.IsValid && model != null)
+            if (model.Onwer == null)
+            {
+                var user = _edmx.AspNetUsers.FirstOrDefault(x => x.UserName == User.Identity.Name);
+                var owner = _edmx.Owners.FirstOrDefault(x => x.UserId == user.Id);
+                model.Onwer = new OwnerViewModel();
+                model.Onwer.OwnerId = owner.OwnerId;
+                model.Cadastr = new CadastrViewModel();
+                model.Cadastr.CadastrId = 1;
+            }
+            if (model != null)
             {
                 await _im.EditImmovable(model);
             }

@@ -50,7 +50,10 @@
             </td>
             <td>
                 @Html.ActionLink("Edit Land data", "EditLand", new { id = item.LandId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.LandId })
+                @if (User.IsInRole("Administration") || User.IsInRole("Moderator"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.LandId })
+                }
             </td>
         </tr>
     }

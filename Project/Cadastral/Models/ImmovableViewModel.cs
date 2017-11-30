@@ -14,6 +14,10 @@ namespace Cadastral.Models
         public ImmovableTypeViewModel ImmovableType { get; set; }
         public OwnerViewModel Onwer { get; set; }
         public CadastrViewModel Cadastr { get; set; }
+        public string CurrentUserId { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string CurrentUserName => $"{Name} {Surname}";
         [Required]
         public decimal Cost { get; set; }
     }

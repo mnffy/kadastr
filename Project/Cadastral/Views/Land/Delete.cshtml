@@ -8,63 +8,64 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Land</h4>
-    <hr />
-    <dl class="dl-horizontal">
-
-        <dt>
-            Land Type
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LandType.LandTypeName)
-        </dd>
-
-        <dt>
-            Owner
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Owner.Owner)
-        </dd>
-
-        <dt>
-            Cadastr
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(x => x.Cadastr.CadastrName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Area)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Area)
-        </dd>
-
-        <dt>
-          Address
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-    </dl>
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
+        <h4>Land</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            @Html.HiddenFor(model => model.LandId)
+            <dt>
+                Land Type
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LandType.LandTypeName)
+            </dd>
+
+            <dt>
+                Owner
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Owner.Owner)
+            </dd>
+
+            <dt>
+                Cadastr
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(x => x.Cadastr.CadastrName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Cost)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Cost)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Area)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Area)
+            </dd>
+
+            <dt>
+                Address
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+        </dl>
+
+
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
