@@ -89,7 +89,16 @@ namespace Cadastral.DAO
             entity.Address = model.Address;
             entity.Area = model.Area;
             entity.Cost = model.Cost;
-            entity.CadastrId = model.Cadastr.CadastrId > 0 ? model.Cadastr.CadastrId : entity.CadastrId;           
+            entity.CadastrId = model.Cadastr.CadastrId > 0 ? model.Cadastr.CadastrId : entity.CadastrId;   
+            if(entity.CadastrId == 2)
+            {
+                var license = new LicenseRequest
+                {
+                    LandId = entity.LandId,
+                    LicenseReqState = "Not confirmed"
+                };
+                _edmx.LicenseRequests.Add(license);
+            }
             await _edmx.SaveChangesAsync();
         }
 

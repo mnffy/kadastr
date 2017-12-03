@@ -12,8 +12,10 @@ namespace Cadastral.Models
         public LandTypeViewModel LandType { get; set; }
         public OwnerViewModel Owner { get; set; }
         [Required]
+        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Invalid Cost")]
         public decimal Cost { get; set; }
         [Required]
+        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Invalid Area")]
         public decimal Area { get; set; }
         [Required]
         public string Address { get; set; }

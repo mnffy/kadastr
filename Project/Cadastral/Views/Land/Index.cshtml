@@ -5,7 +5,16 @@
 }
 
 <h2>Index</h2>
+@using (Html.BeginForm("Index", "Land", FormMethod.Get))
+{
 
+    //строка поиска земли
+    <span>
+        Search land: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @placeholder = "Search by address, owner name or surname, cost or area", @style = "width:950px;max-width:none;" })
+        <input type="submit" value="Search" />
+    </span>
+
+}
 <p>
     @Html.ActionLink("Create New", "CreateLand")
 </p>
@@ -13,6 +22,9 @@
     <tr>
         <th>
             Cadastr
+        </th>
+        <th>
+            Land Type
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Cost)
@@ -34,6 +46,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(x => item.Cadastr.CadastrName)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.LandType.LandTypeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cost)

@@ -1,0 +1,11 @@
+admin:
+login: admin@admin.ru
+psw: Qwerty_123
+
+Moderator:
+login: moderator@mod.ru
+psw: Qwerty_123
+
+Client:
+login: client@client.ru
+psw: Qwerty_123

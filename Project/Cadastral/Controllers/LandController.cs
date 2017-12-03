@@ -16,10 +16,43 @@ namespace Cadastral.Controllers
         private LandDAO _land = new LandDAO();
 
         // GET: Land
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
             var lands = await _land.GetLands();
-            return View(lands);
+            List<LandViewModel> result = new List<LandViewModel>();
+            result = lands;
+            //если переменная  searchString не пустая
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                //попробуем найти по адерсу
+                result = lands.Where(x => x.Address.Contains(searchString)).ToList();
+                //если не получилось найти по адресу
+                if (!result.Any())
+                    //попробуем найти по имени 
+                    result = lands.Where(x => x.Owner.Name.Contains(searchString)).ToList();
+                //если не получилось найти по имени
+                if (!result.Any())
+                    //попробуем найти по фамилии
+                    result = lands.Where(x => x.Owner.Surname.Contains(searchString)).ToList();
+                //если не получилось найти по фамилии
+                if (!result.Any())
+                    //попробуем найти по имени и фамилии
+                    result = lands.Where(x => x.Owner.Owner.Contains(searchString)).ToList();
+                decimal costOrArea = 0;
+                //а может входная переменная число?!
+                bool val = decimal.TryParse(searchString, out costOrArea);
+                //если да
+                if (val)
+                {
+                    //попробуем найти по цене
+                    result = lands.Where(x => x.Cost <= costOrArea).ToList();
+                    //если не получилось
+                    if (!result.Any())
+                        //попробуем найти по площади
+                        result = lands.Where(x => x.Area <= costOrArea).ToList();
+                }
+            }
+            return View(result);
         }
 
         [HttpGet]
@@ -56,7 +89,7 @@ namespace Cadastral.Controllers
             var cadastras = new SelectList(_edmx.Cadastrs.ToList(), "CadastrId", "Name");
             ViewBag.LandTypes = landTypes;
             ViewBag.Owners = owners;
-            ViewBag.Cadastras = cadastras;            
+            ViewBag.Cadastras = cadastras;
         }
 
         [HttpPost]
@@ -65,11 +98,11 @@ namespace Cadastral.Controllers
         {
             try
             {
-                if(model.Owner == null)
+                if (model.Owner == null)
                 {
                     var user = _edmx.AspNetUsers.FirstOrDefault(x => x.UserName == User.Identity.Name);
                     var owner = _edmx.Owners.FirstOrDefault(x => x.UserId == user.Id);
-                    model.Owner = new OwnerViewModel();                    
+                    model.Owner = new OwnerViewModel();
                     model.Owner.OwnerId = owner.OwnerId;
                     model.Cadastr = new CadastrViewModel();
                     model.Cadastr.CadastrId = 2;
@@ -118,7 +151,7 @@ namespace Cadastral.Controllers
                     model.Cadastr = new CadastrViewModel();
                     model.Cadastr.CadastrId = 2;
                 }
-                if (model != null && ModelState.IsValid)
+                if (model != null)
                     await _land.EditLand(model);
                 else
                     throw new Exception();

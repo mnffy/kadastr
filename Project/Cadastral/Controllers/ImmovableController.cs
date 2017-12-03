@@ -16,10 +16,38 @@ namespace Cadastral.Controllers
         ImmovableDAO _im = new ImmovableDAO();
         private CadastraDBEntities _edmx = new CadastraDBEntities();
         // GET: Immovable
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
-            var immovables = await _im.GetImmovables();
-            return View(immovables);
+            var immovables = (await _im.GetImmovables()).ToList();
+            List<ImmovableViewModel> result = new List<ImmovableViewModel>();
+            result = immovables;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                //попробуем найти по адерсу
+                result = immovables.Where(x => x.Address.Contains(searchString)).ToList();
+                //если не получилось найти по адресу
+                if (!result.Any())
+                    //попробуем найти по имени 
+                    result = immovables.Where(x => x.Onwer.Name.Contains(searchString)).ToList();
+                //если не получилось найти по имени
+                if (!result.Any())
+                    //попробуем найти по фамилии
+                    result = immovables.Where(x => x.Onwer.Surname.Contains(searchString)).ToList();
+                //если не получилось найти по фамилии
+                if (!result.Any())
+                    //попробуем найти по имени и фамилии
+                    result = immovables.Where(x => x.Onwer.Owner.Contains(searchString)).ToList();
+                decimal costOrArea = 0;
+                //а может входная переменная число?!
+                bool val = decimal.TryParse(searchString, out costOrArea);
+                //если да
+                if (val)
+                {
+                    //попробуем найти по цене
+                    result = immovables.Where(x => x.Cost <= costOrArea).ToList();
+                }
+            }
+            return View(result);
         }
 
         [HttpGet]

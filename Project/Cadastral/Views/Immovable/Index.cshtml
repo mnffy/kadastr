@@ -6,12 +6,24 @@
 
 <h2>Index</h2>
 
+
+@using (Html.BeginForm("Index", "Immovable", FormMethod.Get))
+{
+
+    //строка поиска недвижимости
+    <span>
+        Search land: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @placeholder = "Search by address, owner name or surname, or cost", @style = "width:950px;max-width:none;" })
+        <input type="submit" value="Search" />
+    </span>
+
+}
+
 <p>
 
     @Html.ActionLink("Create New", "Create")
 
-
 </p>
+
 <table class="table">
     <tr>
         <th>

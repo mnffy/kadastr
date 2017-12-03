@@ -16,6 +16,8 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })        
 
+        @Html.HiddenFor(model => model.LandId)
+
         <div class="form-group">
             @Html.Label("Land Type", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -45,7 +47,7 @@
         @if (User.IsInRole("Administration") || User.IsInRole("Moderator"))
         {
             <div class="form-group">
-                @Html.Label("Land Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Cadastr", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownListFor(x => x.Cadastr.CadastrId, ViewBag.Cadastras as SelectList, new { @class = "form-control" })
                 </div>
@@ -54,7 +56,7 @@
         else
         {
             <div class="form-group">
-                @Html.Label("Land Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("Cadastr", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownListFor(x => x.Cadastr.CadastrId, ViewBag.Cadastras as SelectList, new { @class = "form-control", disabled = "disabled" })
                 </div>

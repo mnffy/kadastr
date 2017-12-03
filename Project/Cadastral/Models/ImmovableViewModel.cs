@@ -19,6 +19,7 @@ namespace Cadastral.Models
         public string Surname { get; set; }
         public string CurrentUserName => $"{Name} {Surname}";
         [Required]
+        [RegularExpression(@"\d+(\.\d{1,2})?", ErrorMessage = "Invalid Cost")]
         public decimal Cost { get; set; }
     }
 }
