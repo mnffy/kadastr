@@ -1,5 +1,6 @@
 ﻿using Cadastral.DataModel;
 using Cadastral.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,6 +13,7 @@ namespace Cadastral.DAO
     public class LandDAO
     {
         private CadastraDBEntities _edmx = new CadastraDBEntities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public LandDAO()
         {
@@ -78,12 +80,15 @@ namespace Cadastral.DAO
 
         public async Task EditLand(LandViewModel model)
         {
+            logger.Debug("Редактирование земельного участка");
             var entity = await (from land in _edmx.Lands
                                 where land.LandId == model.LandId
                                 select land).FirstOrDefaultAsync();
             if (entity == null)
+            {
+                logger.Error("Модель для редактирования пустая");
                 throw new Exception("Модель для редактирования пустая");
-
+            }
             entity.LandTypeId = model.LandType.LandTypeId > 0 ? model.LandType.LandTypeId : entity.LandTypeId;
             entity.OwnerId = model.Owner.OwnerId > 0 ? model.Owner.OwnerId : entity.OwnerId;
             entity.Address = model.Address;
@@ -104,6 +109,7 @@ namespace Cadastral.DAO
 
         public async Task CreateLand(LandViewModel model)
         {
+            logger.Debug("Создание нового земельного участка");
             Land land = new Land
             {
                 Address = model.Address,
@@ -114,7 +120,8 @@ namespace Cadastral.DAO
                 CadastrId = model.Cadastr.CadastrId
             };
             _edmx.Lands.Add(land);
-            await _edmx.SaveChangesAsync();
+            await _edmx.SaveChangesAsync();            
+            logger.Debug("создание заявки со статусом Not Accepted");
             var license = new LicenseRequest
             {
                 LandId = land.LandId,
@@ -126,14 +133,21 @@ namespace Cadastral.DAO
 
         public async Task RemoveLand(LandViewModel model)
         {
+            logger.Debug("Удаление земельного участка");
             var licensee = await _edmx.LicenseRequests.FirstOrDefaultAsync(x => x.LandId == model.LandId);
             var entity = await (from land in _edmx.Lands
                                 where land.LandId == model.LandId
                                 select land).FirstOrDefaultAsync();
             if (entity == null)
+            {
+                logger.Error("Модель для удаления пустая!");
                 throw new Exception("Модель для удаления пустая!");
+            }   
             if(licensee == null)
+            {
+                logger.Error("Модель для удаления пустая!");
                 throw new Exception("Модель для удаления пустая!");
+            }
             _edmx.LicenseRequests.Remove(licensee);
             _edmx.Lands.Remove(entity);
             await _edmx.SaveChangesAsync();

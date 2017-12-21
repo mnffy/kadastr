@@ -1,0 +1,2 @@
+2017-12-21 21:57:06.1626|DEBUG|Cadastral.DAO.LicenseDAO|Установка статуса лицензии Accepted
+2017-12-21 22:07:31.8086|ERROR|Cadastral.DAO.CadastrDAO|Не найдена модель для редактирования

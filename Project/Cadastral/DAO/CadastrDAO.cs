@@ -1,5 +1,6 @@
 ﻿using Cadastral.DataModel;
 using Cadastral.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,6 +13,7 @@ namespace Cadastral.DAO
     public class CadastrDAO
     {
         private CadastraDBEntities _edmx = new CadastraDBEntities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public CadastrDAO()
         {
@@ -43,7 +45,10 @@ namespace Cadastral.DAO
         {
             var entity = await _edmx.Cadastrs.FirstOrDefaultAsync(x => x.CadastrId == model.CadastrId);
             if (entity == null)
-                throw new Exception("Не найдена модель для редактирования");
+            {
+                logger.Error($"Не найдена модель для редактирования");
+                throw new Exception("Не найдена модель для редактирования");             
+            }   
             entity.Name = model.CadastrName;
             await _edmx.SaveChangesAsync();
         }
@@ -52,13 +57,17 @@ namespace Cadastral.DAO
         {
             var entity = await _edmx.Cadastrs.FirstOrDefaultAsync(x => x.CadastrId == model.CadastrId);
             if (entity == null)
+            {
+                logger.Error($"Не найдена модель для редактирования");
                 throw new Exception("Не найдена модель для редактирования");
+            }
             _edmx.Cadastrs.Remove(entity);
             await _edmx.SaveChangesAsync();
         }
 
         public async Task CreateCadastr(CadastrViewModel model)
         {
+            logger.Debug($"Создание кадастра");
             Cadastr entity = new Cadastr
             {
                 Name = model.CadastrName

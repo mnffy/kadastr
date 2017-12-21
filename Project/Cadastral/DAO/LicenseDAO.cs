@@ -1,5 +1,6 @@
 ﻿using Cadastral.DataModel;
 using Cadastral.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Cadastral.DAO
     public class LicenseDAO
     {
         private CadastraDBEntities _edm = new CadastraDBEntities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public LicenseDAO()
         {
@@ -18,6 +20,7 @@ namespace Cadastral.DAO
 
         public IEnumerable<LicenseRequestModel> GetAllRequests()
         {
+            //получение всех лицензий
             var requests = (from license in _edm.LicenseRequests
                             join land in _edm.Lands on license.LandId equals land.LandId
                             join owner in _edm.Owners on land.OwnerId equals owner.OwnerId
@@ -56,6 +59,7 @@ namespace Cadastral.DAO
 
         public LicenseRequestModel GetLicenseById(int id)
         {
+            //получить лицензию по его айди
             var request = (from license in _edm.LicenseRequests
                            join land in _edm.Lands on license.LandId equals land.LandId
                            join owner in _edm.Owners on land.OwnerId equals owner.OwnerId
@@ -95,9 +99,13 @@ namespace Cadastral.DAO
 
         public void EditLicenseData(LicenseRequestModel model)
         {
+            logger.Debug("Редактирование лицензии");
             var license = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == model.LicenseId);
             if (license == null)
+            {
+                logger.Error("Нету данных для редактирования");
                 throw new Exception("Что-то пошло не так");
+            }   
             license.Land.LandId = model.Land.LandId;
             license.Land.LandTypeId = model.Land.LandType.LandTypeId;
             license.Land.Owner.OwnerId = model.Owner.OwnerId;
@@ -109,6 +117,7 @@ namespace Cadastral.DAO
 
         public void Accept(int id)
         {
+            logger.Debug("Установка статуса лицензии Accepted");
             var licEntity = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == id);
             licEntity.LicenseReqState = "Accepted";
             _edm.SaveChanges();
@@ -116,6 +125,7 @@ namespace Cadastral.DAO
 
         public void Reject(int id)
         {
+            logger.Debug("Установка статуса лицензии Accepted");
             var licEntity = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == id);
             licEntity.LicenseReqState = "Rejected";
             _edm.SaveChanges();
@@ -123,6 +133,7 @@ namespace Cadastral.DAO
 
         public void NotAccepted(int id)
         {
+            logger.Debug("Установка статуса лицензии Not Accepted");
             var licEntity = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == id);
             licEntity.LicenseReqState = "Not Accepted";
             _edm.SaveChanges();
@@ -130,6 +141,7 @@ namespace Cadastral.DAO
 
         public void SentToRevision(int id)
         {
+            logger.Debug("Установка статуса лицензии Sened for revision");
             var licEntity = _edm.LicenseRequests.FirstOrDefault(x => x.LicenseId == id);
             licEntity.LicenseReqState = "Sened for revision";
             _edm.SaveChanges();

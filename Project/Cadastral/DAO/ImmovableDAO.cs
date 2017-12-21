@@ -1,5 +1,6 @@
 ﻿using Cadastral.DataModel;
 using Cadastral.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,6 +13,7 @@ namespace Cadastral.DAO
     public class ImmovableDAO
     {
         private CadastraDBEntities _edm = new CadastraDBEntities();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public async Task<IEnumerable<ImmovableViewModel>> GetImmovables() =>
             await (from im in _edm.Immovables
@@ -71,7 +73,10 @@ namespace Cadastral.DAO
         {
             var entity = await _edm.Immovables.FirstOrDefaultAsync(x => x.ImmovableId == model.ImmovableId);
             if (entity == null)
+            {
+                logger.Error("Не найдена сущность для редактирования");
                 throw new Exception("Не найдена сущность для редактирования");
+            }   
             entity.Address = model.Address;
             entity.Cost = model.Cost;
             entity.ImmovableTypeId = model.ImmovableType.ImmovableTypeId;
@@ -81,17 +86,25 @@ namespace Cadastral.DAO
         }
         public async Task RemoveImmovable(int id)
         {
+            logger.Debug("Удаление недвижимости");
             var entity = await _edm.Immovables.FirstOrDefaultAsync(x => x.ImmovableId == id);
             if (entity == null)
+            {
+                logger.Error("Не найдена сущность для удаления");
                 throw new Exception("Не найдена сущность для удаления");
+            }
             _edm.Immovables.Remove(entity);
             await _edm.SaveChangesAsync();
         }
 
         public async Task CreateImmovable(ImmovableViewModel model)
         {
+            logger.Debug("Создание недвижимости");
             if (model == null)
+            {
+                logger.Error("Модель для добавления нового недвижимого имущества пуста!");
                 throw new Exception("Модель для добавления нового недвижимого имущества пуста!");
+            }   
             var immovable = new Immovable
             {
                 Address = model.Address,
